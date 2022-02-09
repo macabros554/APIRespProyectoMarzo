@@ -32,7 +32,7 @@ public class AuthController {
         user.setPassword(encodedPass);
         user = userRepo.save(user);
         String token = jwtUtil.generateToken(user.getEmail());
-        return Collections.singletonMap("jwt-token", token);
+        return Collections.singletonMap("access_token", token);
     }
 
     @PostMapping("/login")
@@ -41,15 +41,14 @@ public class AuthController {
             UsernamePasswordAuthenticationToken authInputToken =
                     new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
 
-            authManager.authenticate(authInputToken);
-
+            //authManager.authenticate(authInputToken);
+ 
             String token = jwtUtil.generateToken(body.getEmail());
 
-            return Collections.singletonMap("jwt-token", token);
+            return Collections.singletonMap("access_token", token);
         }catch (AuthenticationException authExc){
             throw new RuntimeException("Invalid Login Credentials");
         }
     }
-
 
 }

@@ -2,9 +2,6 @@ package com.example.demo.model;
 
 import java.util.Objects;
 
-import lombok.*;
-
-@NoArgsConstructor
 public class LoginCredentials {
 
     private String email;

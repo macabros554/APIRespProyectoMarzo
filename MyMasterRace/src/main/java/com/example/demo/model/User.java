@@ -1,23 +1,24 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-
+@Table(name="usuario")
 public class User {
 
-	@Id
+	
 	private String name;
+	@Id
 	private String email;
 	private String calle;
 	private String telefono;
@@ -27,10 +28,8 @@ public class User {
 	private String codigotarjeta;
 	private String tarjeta;
 	private String dueniotarjeta;
-	@OneToMany
-	@JsonBackReference
-	private List<Ordenador> listaordenadores=new ArrayList<>();
-	private Date fechanacimiento;
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Pedido> listapedidos=new ArrayList<>();
 	
 	public User() {
 		super();
@@ -41,22 +40,14 @@ public class User {
 		this.email = email;
 		this.password = password;
 	}
-
-	public User(String name, String email, String calle, String telefono, String password, String tipopado,
-			String codigotarjeta, String tarjeta, String dueniotarjeta, List<Ordenador> listaordenadores,
-			Date fechanacimiento) {
+	
+	public User(String name, String email, String calle, String telefono, String password) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.calle = calle;
 		this.telefono = telefono;
 		this.password = password;
-		this.tipopado = tipopado;
-		this.codigotarjeta = codigotarjeta;
-		this.tarjeta = tarjeta;
-		this.dueniotarjeta = dueniotarjeta;
-		this.listaordenadores = listaordenadores;
-		this.fechanacimiento = fechanacimiento;
 	}
 
 	public String getName() {
@@ -131,20 +122,12 @@ public class User {
 		this.dueniotarjeta = dueniotarjeta;
 	}
 
-	public List<Ordenador> getListaordenadores() {
-		return listaordenadores;
+	public List<Pedido> getListapedidos() {
+		return listapedidos;
 	}
 
-	public void setListaordenadores(List<Ordenador> listaordenadores) {
-		this.listaordenadores = listaordenadores;
-	}
-
-	public Date getFechanacimiento() {
-		return fechanacimiento;
-	}
-
-	public void setFechanacimiento(Date fechanacimiento) {
-		this.fechanacimiento = fechanacimiento;
+	public void setListapedidos(List<Pedido> listapedidos) {
+		this.listapedidos = listapedidos;
 	}
 
 	@Override
@@ -168,7 +151,7 @@ public class User {
 	public String toString() {
 		return "Usuario [name=" + name + ", email=" + email + ", calle=" + calle + ", telefono=" + telefono
 				+ ", password=" + password + ", tipopado=" + tipopado + ", codigotarjeta=" + codigotarjeta
-				+ ", tarjeta=" + tarjeta + ", dueniotarjeta=" + dueniotarjeta + ", fechanacimiento=" + fechanacimiento
+				+ ", tarjeta=" + tarjeta + ", dueniotarjeta=" + dueniotarjeta + ", fechanacimiento="
 				+ "]";
 	}
 	

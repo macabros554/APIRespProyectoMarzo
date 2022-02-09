@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -25,10 +23,10 @@ public class Ordenador {
 	private String nombre;
 	private String ram;
 	private String procesador;
-	private List<String> listadediscosduros=new ArrayList<>();
+	private String listadediscosduros;
 	private String grafica;
 	private String fuente;
-	private List<String> imagenes=new ArrayList<>();
+	private String imagenes;
 	private String descripcion;
 	private double precio;
 	@ManyToOne
@@ -48,6 +46,14 @@ public class Ordenador {
 		this.precio = precio;
 	}
 
+	public User getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(User usuario) {
+		this.usuario = usuario;
+	}
 
 	public Long getId() {
 		return id;
@@ -89,12 +95,12 @@ public class Ordenador {
 	}
 
 
-	public List<String> getListadediscosduros() {
+	public String getListadediscosduros() {
 		return listadediscosduros;
 	}
 
 
-	public void setListadediscosduros(List<String> listadediscosduros) {
+	public void setListadediscosduros(String listadediscosduros) {
 		this.listadediscosduros = listadediscosduros;
 	}
 
@@ -119,12 +125,12 @@ public class Ordenador {
 	}
 
 
-	public List<String> getImagenes() {
+	public String getImagenes() {
 		return imagenes;
 	}
 
 
-	public void setImagenes(List<String> imagenes) {
+	public void setImagenes(String imagenes) {
 		this.imagenes = imagenes;
 	}
 
