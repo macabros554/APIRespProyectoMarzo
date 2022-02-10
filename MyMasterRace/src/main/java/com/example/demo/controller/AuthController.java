@@ -41,7 +41,7 @@ public class AuthController {
             UsernamePasswordAuthenticationToken authInputToken =
                     new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
 
-            //authManager.authenticate(authInputToken);
+            authManager.authenticate(authInputToken);
  
             String token = jwtUtil.generateToken(body.getEmail());
 

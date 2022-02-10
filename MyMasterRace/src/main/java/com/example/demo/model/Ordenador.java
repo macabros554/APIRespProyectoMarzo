@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.example.demo.model.componentes.Disco;
+import com.example.demo.model.componentes.Fuente;
+import com.example.demo.model.componentes.Grafica;
+import com.example.demo.model.componentes.Procesador;
+import com.example.demo.model.componentes.Ram;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
@@ -21,11 +26,16 @@ public class Ordenador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nombre;
-	private String ram;
-	private String procesador;
-	private String listadediscosduros;
-	private String grafica;
-	private String fuente;
+	@ManyToOne
+	private Ram ram;
+	@ManyToOne
+	private Procesador procesador;
+	@ManyToOne
+	private Disco discoduro;
+	@ManyToOne
+	private Grafica grafica;
+	@ManyToOne
+	private Fuente fuente;
 	private String imagenes;
 	private String descripcion;
 	private double precio;
@@ -33,18 +43,25 @@ public class Ordenador {
 	@JsonBackReference
 	private User usuario;
 	
+	public Ordenador() {
+		super();
+	}
 	
-	public Ordenador(String nombre, String ram, String procesador, String grafica,
-			String fuente, String descripcion, double precio) {
+	public Ordenador(String nombre, Ram ram, Procesador procesador, Disco listadediscosduros, Grafica grafica,
+			Fuente fuente, String imagenes, String descripcion, double precio, User usuario) {
 		super();
 		this.nombre = nombre;
 		this.ram = ram;
 		this.procesador = procesador;
+		this.discoduro = listadediscosduros;
 		this.grafica = grafica;
 		this.fuente = fuente;
+		this.imagenes = imagenes;
 		this.descripcion = descripcion;
 		this.precio = precio;
+		this.usuario = usuario;
 	}
+
 
 	public User getUsuario() {
 		return usuario;
@@ -74,53 +91,52 @@ public class Ordenador {
 		this.nombre = nombre;
 	}
 
-
-	public String getRam() {
+	public Ram getRam() {
 		return ram;
 	}
 
 
-	public void setRam(String ram) {
+	public void setRam(Ram ram) {
 		this.ram = ram;
 	}
 
 
-	public String getProcesador() {
+	public Procesador getProcesador() {
 		return procesador;
 	}
 
 
-	public void setProcesador(String procesador) {
+	public void setProcesador(Procesador procesador) {
 		this.procesador = procesador;
 	}
 
 
-	public String getListadediscosduros() {
-		return listadediscosduros;
+	public Disco getListadediscosduros() {
+		return discoduro;
 	}
 
 
-	public void setListadediscosduros(String listadediscosduros) {
-		this.listadediscosduros = listadediscosduros;
+	public void setListadediscosduros(Disco listadediscosduros) {
+		this.discoduro = listadediscosduros;
 	}
 
 
-	public String getGrafica() {
+	public Grafica getGrafica() {
 		return grafica;
 	}
 
 
-	public void setGrafica(String grafica) {
+	public void setGrafica(Grafica grafica) {
 		this.grafica = grafica;
 	}
 
 
-	public String getFuente() {
+	public Fuente getFuente() {
 		return fuente;
 	}
 
 
-	public void setFuente(String fuente) {
+	public void setFuente(Fuente fuente) {
 		this.fuente = fuente;
 	}
 

@@ -19,17 +19,19 @@ public class Ram {
     private String tipo;
     private String formato; //DIMM o SO-DIMM
     private String capacidad;
+    private String kit;
     
 	public Ram() {
 		super();
 	}
 
-	public Ram(String nombre, String tipo, String formato, String capacidad) {
+	public Ram(String nombre, String tipo, String formato, String capacidad, String kit) {
 		super();
 		this.nombre = nombre;
 		this.tipo = tipo;
 		this.formato = formato;
 		this.capacidad = capacidad;
+		this.kit = kit;
 	}
 
 	public Long getId() {
@@ -71,6 +73,14 @@ public class Ram {
 	public void setCapacidad(String capacidad) {
 		this.capacidad = capacidad;
 	}
+	
+	public String getKit() {
+		return kit;
+	}
+
+	public void setKit(String kit) {
+		this.kit = kit;
+	}
 
 	@Override
 	public int hashCode() {
@@ -92,10 +102,8 @@ public class Ram {
 	@Override
 	public String toString() {
 		return "Ram [id=" + id + ", nombre=" + nombre + ", tipo=" + tipo + ", formato=" + formato + ", capacidad="
-				+ capacidad + "]";
+				+ capacidad + ", kit=" + kit + "]";
 	}
-	
-    
-    
+
 
 }
