@@ -114,6 +114,12 @@ public class EjemploRestServiceJwtApplication {
 		};
 	}
 	
+	/**
+	 * Lista de ordenadores
+	 * @param repoOedenador
+	 * @return
+	 */
+	
 	@Bean
 	CommandLineRunner iniOrdenador(OrdenadoresRepo repoOedenador) {
 		String enlace1="https://acortar.link/ghPtNb";
