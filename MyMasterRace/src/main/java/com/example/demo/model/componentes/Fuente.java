@@ -18,16 +18,18 @@ public class Fuente {
     private String nombre;
 	private String certificacion;
 	private String potencia;
+	private double precio;
 	
 	public Fuente() {
 		super();
 	}
-
-	public Fuente(String nombre, String certificacion, String potencia) {
+	
+	public Fuente(String nombre, String certificacion, String potencia, double precio) {
 		super();
 		this.nombre = nombre;
 		this.certificacion = certificacion;
 		this.potencia = potencia;
+		this.precio = precio;
 	}
 
 	public Long getId() {
@@ -53,11 +55,6 @@ public class Fuente {
 	public void setPotencia(String potencia) {
 		this.potencia = potencia;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
 	
 	public String getNombre() {
 		return nombre;
@@ -65,6 +62,19 @@ public class Fuente {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -82,8 +92,10 @@ public class Fuente {
 	@Override
 	public String toString() {
 		return "Fuente [id=" + id + ", nombre=" + nombre + ", certificacion=" + certificacion + ", potencia=" + potencia
-				+ "]";
+				+ ", precio=" + precio + "]";
 	}
+
+	
 
 
 	

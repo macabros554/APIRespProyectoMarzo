@@ -18,16 +18,18 @@ public class Disco {
     private String nombre;
     private String tipo;
     private String capacidad;
+    private double precio;
     
 	public Disco() {
 		super();
 	}
 
-	public Disco(String nombre, String tipo, String capacidad) {
+	public Disco(String nombre, String tipo, String capacidad, double precio) {
 		super();
 		this.nombre = nombre;
 		this.tipo = tipo;
 		this.capacidad = capacidad;
+		this.precio = precio;
 	}
 
 	public Long getId() {
@@ -61,10 +63,19 @@ public class Disco {
 	public void setCapacidad(String capacidad) {
 		this.capacidad = capacidad;
 	}
+	
+	public double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
 
 	@Override
 	public String toString() {
-		return "Disco [id=" + id + ", nombre=" + nombre + ", tipo=" + tipo + ", capacidad=" + capacidad + "]";
+		return "Disco [id=" + id + ", nombre=" + nombre + ", tipo=" + tipo + ", capacidad=" + capacidad + ", precio="
+				+ precio + "]";
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.error.ExisteUsuarioNotFoundExeption;
 import com.example.demo.model.LoginCredentials;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepo;
@@ -26,16 +27,25 @@ public class AuthController {
     @Autowired private AuthenticationManager authManager;
     @Autowired private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public Map<String, Object> registerHandler(@RequestBody User user){
-        String encodedPass = passwordEncoder.encode(user.getPassword());
+    	if (userRepo.findByEmail(user.getEmail()).orElse(null)==null) {
+            String encodedPass = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPass);
+            user = userRepo.save(user);
+            String token = jwtUtil.generateToken(user.getEmail());
+            return Collections.singletonMap("access_token", token);
+		}else {
+			throw new ExisteUsuarioNotFoundExeption();
+		}
+        /*String encodedPass = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPass);
         user = userRepo.save(user);
         String token = jwtUtil.generateToken(user.getEmail());
-        return Collections.singletonMap("access_token", token);
+        return Collections.singletonMap("access_token", token);*/
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public Map<String, Object> loginHandler(@RequestBody LoginCredentials body){
         try {
             UsernamePasswordAuthenticationToken authInputToken =

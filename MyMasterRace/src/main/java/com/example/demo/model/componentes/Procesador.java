@@ -19,17 +19,19 @@ public class Procesador {
     private String marca;
     private String modelo;
     private String socket;
+    private double precio;
     
 	public Procesador() {
 		super();
 	}
 
-	public Procesador(String nombre, String marca, String modelo, String socket) {
+	public Procesador(String nombre, String marca, String modelo, String socket, double precio) {
 		super();
 		this.nombre = nombre;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.socket = socket;
+		this.precio = precio;
 	}
 
 	public Long getId() {
@@ -72,6 +74,14 @@ public class Procesador {
 		this.socket = socket;
 	}
 
+	public double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -92,9 +102,7 @@ public class Procesador {
 	@Override
 	public String toString() {
 		return "Procesador [id=" + id + ", nombre=" + nombre + ", marca=" + marca + ", modelo=" + modelo + ", socket="
-				+ socket + "]";
-	}
-    
-    
+				+ socket + ", precio=" + precio + "]";
+	}    
 
 }

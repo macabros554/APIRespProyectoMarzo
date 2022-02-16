@@ -14,8 +14,6 @@ import com.example.demo.model.componentes.Fuente;
 import com.example.demo.model.componentes.Grafica;
 import com.example.demo.model.componentes.Procesador;
 import com.example.demo.model.componentes.Ram;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 
 
 @Entity
@@ -38,38 +36,28 @@ public class Ordenador {
 	private Fuente fuente;
 	private String imagenes;
 	private String descripcion;
+	private String descripcionDetallada;
+	private int cantidad;
 	private double precio;
-	@ManyToOne
-	@JsonBackReference
-	private User usuario;
 	
 	public Ordenador() {
 		super();
-	}
-	
-	public Ordenador(String nombre, Ram ram, Procesador procesador, Disco listadediscosduros, Grafica grafica,
-			Fuente fuente, String imagenes, String descripcion, double precio, User usuario) {
+	}	
+
+	public Ordenador(String nombre, Ram ram, Procesador procesador, Disco discoduro, Grafica grafica, Fuente fuente,
+			String imagenes, String descripcion, String descripcionDetallada, int cantidad, double precio) {
 		super();
 		this.nombre = nombre;
 		this.ram = ram;
 		this.procesador = procesador;
-		this.discoduro = listadediscosduros;
+		this.discoduro = discoduro;
 		this.grafica = grafica;
 		this.fuente = fuente;
 		this.imagenes = imagenes;
 		this.descripcion = descripcion;
+		this.descripcionDetallada = descripcionDetallada;
+		this.cantidad = cantidad;
 		this.precio = precio;
-		this.usuario = usuario;
-	}
-
-
-	public User getUsuario() {
-		return usuario;
-	}
-
-
-	public void setUsuario(User usuario) {
-		this.usuario = usuario;
 	}
 
 	public Long getId() {
@@ -95,36 +83,21 @@ public class Ordenador {
 		return ram;
 	}
 
-
 	public void setRam(Ram ram) {
 		this.ram = ram;
 	}
-
 
 	public Procesador getProcesador() {
 		return procesador;
 	}
 
-
 	public void setProcesador(Procesador procesador) {
 		this.procesador = procesador;
 	}
 
-
-	public Disco getListadediscosduros() {
-		return discoduro;
-	}
-
-
-	public void setListadediscosduros(Disco listadediscosduros) {
-		this.discoduro = listadediscosduros;
-	}
-
-
 	public Grafica getGrafica() {
 		return grafica;
 	}
-
 
 	public void setGrafica(Grafica grafica) {
 		this.grafica = grafica;
@@ -135,47 +108,62 @@ public class Ordenador {
 		return fuente;
 	}
 
-
 	public void setFuente(Fuente fuente) {
 		this.fuente = fuente;
 	}
-
 
 	public String getImagenes() {
 		return imagenes;
 	}
 
-
 	public void setImagenes(String imagenes) {
 		this.imagenes = imagenes;
 	}
-
 
 	public String getDescripcion() {
 		return descripcion;
 	}
 
-
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
 
 	public double getPrecio() {
 		return precio;
 	}
 
-
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
+	
+	public Disco getDiscoduro() {
+		return discoduro;
+	}
 
+	public void setDiscoduro(Disco discoduro) {
+		this.discoduro = discoduro;
+	}
+
+	public String getDescripcionDetallada() {
+		return descripcionDetallada;
+	}
+
+	public void setDescripcionDetallada(String descripcionDetallada) {
+		this.descripcionDetallada = descripcionDetallada;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -189,18 +177,15 @@ public class Ordenador {
 		return Objects.equals(id, other.id);
 	}
 
-
 	@Override
 	public String toString() {
 		return "Ordenador [id=" + id + ", nombre=" + nombre + ", ram=" + ram + ", procesador=" + procesador
-				+ ", grafica=" + grafica + ", fuente=" + fuente + ", descripcion=" + descripcion + ", precio=" + precio
-				+ "]";
+				+ ", discoduro=" + discoduro + ", grafica=" + grafica + ", fuente=" + fuente + ", imagenes=" + imagenes
+				+ ", descripcion=" + descripcion + ", descripcionDetallada=" + descripcionDetallada + ", cantidad="
+				+ cantidad + ", precio=" + precio + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
 }

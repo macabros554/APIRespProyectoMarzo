@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class User {
 	private String codigotarjeta;
 	private String tarjeta;
 	private String dueniotarjeta;
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Pedido> listapedidos=new ArrayList<>();
 	
