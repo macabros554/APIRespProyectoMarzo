@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -46,7 +47,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth/login")
-    public Map<String, Object> loginHandler(@RequestBody LoginCredentials body){
+    public ResponseEntity<Map<String, Object>> loginHandler(@RequestBody LoginCredentials body){
         try {
             UsernamePasswordAuthenticationToken authInputToken =
                     new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
@@ -55,9 +56,13 @@ public class AuthController {
  
             String token = jwtUtil.generateToken(body.getEmail());
 
-            return Collections.singletonMap("access_token", token);
+            return ResponseEntity.ok(Collections.singletonMap("access_token", token));
         }catch (AuthenticationException authExc){
-            throw new RuntimeException("Invalid Login Credentials");
+        	if(this.userRepo.getEmail(body.getEmail()) != null){
+        		throw new RuntimeException("La contraseña no es correcta.");
+        	}else {
+        		throw new RuntimeException("Email y contraseña incorrectos.");
+        	}
         }
     }
 

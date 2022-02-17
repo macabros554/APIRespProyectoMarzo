@@ -1,5 +1,9 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,19 @@ public class ProcesadorService {
 		una.setSocket(nuevo.getSocket());
 		repoProcesador.save(una);
 		return una;
+	}
+	
+	public List<Procesador> listarProcesadoresCompatibles(Long id){
+		
+		Procesador referencia=buscarProcesador(id);
+		List<Procesador> listaProcesadores=new ArrayList<>();
+		for (Procesador procesador : repoProcesador.findAll()) {
+			if (referencia.getSocket().equals(procesador.getSocket())) {
+				listaProcesadores.add(procesador);
+			}
+		}
+		
+		return listaProcesadores;
 	}
 
 }

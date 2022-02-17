@@ -122,11 +122,11 @@ public class EjemploRestServiceJwtApplication {
 	
 	@Bean
 	CommandLineRunner iniOrdenador(OrdenadoresRepo repoOedenador) {
-		String enlace1="https://acortar.link/ghPtNb";
-		String enlace2="https://acortar.link/0YqqbY";
-		String enlace3="https://acortar.link/KAZLqE";
-		String enlace4="https://acortar.link/qxI3GV";
-		String enlace5="https://acortar.link/vGooW2";
+		String enlace1="https://d10mhq06fikmnr.cloudfront.net/catalog/product/a/z/azza_rgb_os_mp-min_15.png";
+		String enlace2="https://static.carrefour.es/hd_510x_/imagenes/products/84254/02437/728/8425402437728/imagenGrande1.jpg";
+		String enlace3="https://d10mhq06fikmnr.cloudfront.net/catalog/product/h/u/hunter_rev2_main_rgb-min_4.png";
+		String enlace4="https://www.info-computer.com/65105-large_default/-pc-gaming-i5-9400-29-ghz-8gb-ddr4-ssd-480-gb-w10-home-oferta.jpg";
+		String enlace5="https://www.info-computer.com/78122-large_default/pc-gaming-amd-ryzen-9-5900x-32-gb-ddr4-2-tb-1-tb-ssd-m2-rtx-3080-ti-12-gb-ddr6x-w10-home-64.jpg";
 		
 		return (arg)-> {
 			serviceDisco.buscarDisco((long) 2);
