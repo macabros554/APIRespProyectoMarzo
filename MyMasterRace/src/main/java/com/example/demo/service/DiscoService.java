@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,19 @@ public class DiscoService {
 		una.setPrecio(nuevo.getPrecio());
 		repoDisco.save(una);
 		return una;
+	}
+	
+	public List<Disco> findAllDiscos(Long id){
+		Disco referencia=buscarDisco(id);
+		List<Disco> listadiscos=new ArrayList<>();
+		for (Disco disco : repoDisco.findAll()) {
+			if (referencia.getId().equals(disco.getId())) {
+				
+			}else {
+				listadiscos.add(disco);
+			}
+		}
+		return listadiscos;
 	}
 
 }

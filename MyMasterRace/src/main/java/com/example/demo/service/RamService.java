@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,25 @@ public class RamService {
 		una.setPrecio(nuevo.getPrecio());
 		repoRam.save(una);
 		return una;
+	}
+	
+	public List<Ram> listarRamsCompatibles(Long id){
+		
+		Ram referencia=buscarRam(id);
+		List<Ram> listaRams=new ArrayList<>();
+		for (Ram ram : repoRam.findAll()) {
+			if (referencia.getTipo().equals(ram.getTipo())) {
+				if (referencia.getFormato().equals(ram.getFormato())) {
+					if (referencia.getId().equals(ram.getId())) {
+						
+					}else {
+						listaRams.add(ram);
+					}
+				}
+			}
+		}
+		
+		return listaRams;
 	}
 
 }

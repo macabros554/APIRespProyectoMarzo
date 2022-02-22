@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,19 @@ public class FuenteService {
 		una.setPrecio(nuevo.getPrecio());
 		repoFuente.save(una);
 		return una;
+	}
+	
+	public List<Fuente> findAllFuentes(Long id){
+		Fuente referencia=buscarFuente(id);
+		List<Fuente> listaFuentes=new ArrayList<>();
+		for (Fuente fuente : repoFuente.findAll()) {
+			if (referencia.getId().equals(fuente.getId())) {
+				
+			}else {
+				listaFuentes.add(fuente);
+			}
+		}
+		return listaFuentes;
 	}
 
 }

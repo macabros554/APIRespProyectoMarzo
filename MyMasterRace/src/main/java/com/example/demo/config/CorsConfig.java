@@ -23,7 +23,7 @@ public class CorsConfig implements WebMvcConfigurer {
 		                "Access-Control-Request-Headers")
 		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
 				//consultarToken
-				registry.addMapping("/consultaRapida").allowedOrigins("http://localhost:4200")
+				registry.addMapping("/validarToken").allowedOrigins("http://localhost:4200")
 		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
 		                "Access-Control-Request-Headers","Authorization")
 		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
@@ -39,6 +39,36 @@ public class CorsConfig implements WebMvcConfigurer {
 		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
 				//procesadoresCompatibles
 				registry.addMapping("/componente/procesador/{id}").allowedOrigins("http://localhost:4200")
+		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+		                "Access-Control-Request-Headers","Authorization")
+		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
+				//ramsCompatibles
+				registry.addMapping("/componente/ram/{id}").allowedOrigins("http://localhost:4200")
+		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+		                "Access-Control-Request-Headers","Authorization")
+		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
+				//DiscosDuros
+				registry.addMapping("/componente/discos/{id}").allowedOrigins("http://localhost:4200")
+		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+		                "Access-Control-Request-Headers","Authorization")
+		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
+				//Graficas
+				registry.addMapping("/componente/graficas/{id}").allowedOrigins("http://localhost:4200")
+		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+		                "Access-Control-Request-Headers","Authorization")
+		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
+				//Fuentes
+				registry.addMapping("/componente/fuentes/{id}").allowedOrigins("http://localhost:4200")
+		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+		                "Access-Control-Request-Headers","Authorization")
+		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
+				//Crear pedido
+				registry.addMapping("/pedido").allowedOrigins("http://localhost:4200")
+		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+		                "Access-Control-Request-Headers","Authorization")
+		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
+				//pedido
+				registry.addMapping("/pedido/{id}").allowedOrigins("http://localhost:4200")
 		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
 		                "Access-Control-Request-Headers","Authorization")
 		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");

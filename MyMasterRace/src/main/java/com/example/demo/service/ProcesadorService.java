@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,11 @@ public class ProcesadorService {
 		List<Procesador> listaProcesadores=new ArrayList<>();
 		for (Procesador procesador : repoProcesador.findAll()) {
 			if (referencia.getSocket().equals(procesador.getSocket())) {
-				listaProcesadores.add(procesador);
+				if (referencia.getId().equals(procesador.getId())) {
+					
+				}else {
+					listaProcesadores.add(procesador);
+				}
 			}
 		}
 		

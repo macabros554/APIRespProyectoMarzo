@@ -24,24 +24,34 @@ public class Pedido {
 	private String telefono;
 	private String correoElectronico;
 	@ManyToOne
-	@JsonBackReference
+	
 	private User usuario;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-    @JsonBackReference
+    
 	@ManyToOne
 	private Ordenador ordenador;
     
-	public Pedido(Date fechaPack, String direccion, String telefono, String correoElectronico, User usuario,
+	public Pedido(Long id) {
+		super();
+		this.id = id;
+	}
+
+	public Pedido(String direccion, String telefono, String correoElectronico,
 			Ordenador ordenador) {
 		super();
-		this.fechaPack = fechaPack;
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.correoElectronico = correoElectronico;
-		this.usuario = usuario;
 		this.ordenador = ordenador;
+	}
+	
+	public Pedido(String direccion, String telefono, String correoElectronico) {
+		super();
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.correoElectronico = correoElectronico;
 	}
 
 	public Pedido() {
