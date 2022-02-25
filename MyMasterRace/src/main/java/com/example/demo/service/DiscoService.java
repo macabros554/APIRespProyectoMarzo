@@ -30,14 +30,9 @@ public class DiscoService {
 	}
 	
 	public List<Disco> findAllDiscos(Long id){
-		Disco referencia=buscarDisco(id);
 		List<Disco> listadiscos=new ArrayList<>();
 		for (Disco disco : repoDisco.findAll()) {
-			if (referencia.getId().equals(disco.getId())) {
-				
-			}else {
-				listadiscos.add(disco);
-			}
+			listadiscos.add(disco);
 		}
 		return listadiscos;
 	}

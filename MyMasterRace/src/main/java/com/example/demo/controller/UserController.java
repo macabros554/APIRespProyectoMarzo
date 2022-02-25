@@ -27,7 +27,6 @@ import com.example.demo.error.SocketNotFoundExeption;
 import com.example.demo.error.UserNotFoundExeption;
 import com.example.demo.model.Ordenador;
 import com.example.demo.model.Pedido;
-import com.example.demo.model.User;
 import com.example.demo.model.componentes.Disco;
 import com.example.demo.model.componentes.Fuente;
 import com.example.demo.model.componentes.Grafica;

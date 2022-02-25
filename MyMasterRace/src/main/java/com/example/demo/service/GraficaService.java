@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.model.componentes.Fuente;
 import com.example.demo.model.componentes.Grafica;
 import com.example.demo.repository.GraficaRepo;
 
@@ -30,15 +31,11 @@ public class GraficaService {
 	}
 
 	public List<Grafica> findAllGraficas(Long id){
-		Grafica referencia=buscarGrafica(id);
 		List<Grafica> listaGraficas=new ArrayList<>();
-		for (Grafica grafia : repoGrafica.findAll()) {
-			if (referencia.getId().equals(grafia.getId())) {
-				
-			}else {
-				listaGraficas.add(grafia);
-			}
+		for (Grafica grafica : repoGrafica.findAll()) {
+			listaGraficas.add(grafica);
 		}
+		
 		return listaGraficas;
 	}
 }

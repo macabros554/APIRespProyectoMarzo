@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,6 +29,7 @@ import com.example.demo.model.LoginCredentials;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepo;
 import com.example.demo.security.JWTUtil;
+import com.example.demo.service.UsuarioService;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -37,6 +39,7 @@ public class AuthController {
     @Autowired private JWTUtil jwtUtil;
     @Autowired private AuthenticationManager authManager;
     @Autowired private PasswordEncoder passwordEncoder;
+	@Autowired private UsuarioService serviceUsuario;
 
     @PostMapping("/auth/register")
     public Map<String, Object> registerHandler(@RequestBody User user){
@@ -68,9 +71,11 @@ public class AuthController {
     }
     
     @GetMapping("/validarToken")
-    public ResponseEntity<String> validarToken() {
+    public ResponseEntity<User> validarToken() {
     	try {
-    		return ResponseEntity.ok("funciona");
+    		String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            
+    		return ResponseEntity.ok(serviceUsuario.buscarUsuario(email));
     	}catch (Exception e) {
 			throw new TokenNoValidoExeption();
 		}

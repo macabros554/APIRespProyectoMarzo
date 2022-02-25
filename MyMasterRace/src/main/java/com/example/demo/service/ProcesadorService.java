@@ -31,19 +31,13 @@ public class ProcesadorService {
 	}
 	
 	public List<Procesador> listarProcesadoresCompatibles(Long id){
-		
 		Procesador referencia=buscarProcesador(id);
 		List<Procesador> listaProcesadores=new ArrayList<>();
 		for (Procesador procesador : repoProcesador.findAll()) {
 			if (referencia.getSocket().equals(procesador.getSocket())) {
-				if (referencia.getId().equals(procesador.getId())) {
-					
-				}else {
-					listaProcesadores.add(procesador);
-				}
+				listaProcesadores.add(procesador);
 			}
 		}
-		
 		return listaProcesadores;
 	}
 

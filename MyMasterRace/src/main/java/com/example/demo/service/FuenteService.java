@@ -30,14 +30,9 @@ public class FuenteService {
 	}
 	
 	public List<Fuente> findAllFuentes(Long id){
-		Fuente referencia=buscarFuente(id);
 		List<Fuente> listaFuentes=new ArrayList<>();
 		for (Fuente fuente : repoFuente.findAll()) {
-			if (referencia.getId().equals(fuente.getId())) {
-				
-			}else {
-				listaFuentes.add(fuente);
-			}
+			listaFuentes.add(fuente);
 		}
 		return listaFuentes;
 	}

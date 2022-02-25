@@ -38,11 +38,7 @@ public class RamService {
 		for (Ram ram : repoRam.findAll()) {
 			if (referencia.getTipo().equals(ram.getTipo())) {
 				if (referencia.getFormato().equals(ram.getFormato())) {
-					if (referencia.getId().equals(ram.getId())) {
-						
-					}else {
-						listaRams.add(ram);
-					}
+					listaRams.add(ram);
 				}
 			}
 		}
