@@ -39,9 +39,9 @@ public class PedidoService {
 		pedidoNuevo.setTelefono(p.getTelefono());
 		pedidoNuevo.setTipopado(p.getTipopado());
 		pedidoNuevo.setUsuario(p.getUsuario());
-		pedidoNuevo.setOrdenador(p.getOrdenador());
+		pedidoNuevo.setOrdenador(serviceOrdenadorVendido.anadirOrdenador(p.getOrdenador()));
 		
-		serviceOrdenadorVendido.anadirOrdenador(p.getOrdenador());
+		
 		
 		repoPedido.save(pedidoNuevo);
 		

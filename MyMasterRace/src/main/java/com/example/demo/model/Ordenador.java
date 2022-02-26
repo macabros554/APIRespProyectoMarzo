@@ -15,7 +15,6 @@ import com.example.demo.model.componentes.Grafica;
 import com.example.demo.model.componentes.Procesador;
 import com.example.demo.model.componentes.Ram;
 
-
 @Entity
 @Table(name="ordenador")
 public class Ordenador {
