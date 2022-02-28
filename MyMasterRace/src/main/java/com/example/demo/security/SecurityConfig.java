@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pedido").hasRole("USER")
                 .antMatchers("/pedido/**").hasRole("USER")
                 .antMatchers("/validarToken").hasRole("USER")
+                .antMatchers("/usuario").hasRole("USER")
                 .and()
                 .userDetailsService(uds)
                 .exceptionHandling()

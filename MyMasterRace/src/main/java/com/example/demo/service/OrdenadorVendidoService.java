@@ -53,5 +53,9 @@ public class OrdenadorVendidoService {
 	public List<OrdenadorVendido> findAll(){
 		return repoOrdenadorVendido.findAll();
 	}
+	
+	public void borrarOrdenador(Long id) {
+		repoOrdenadorVendido.deleteById(id);
+	}
 
 }

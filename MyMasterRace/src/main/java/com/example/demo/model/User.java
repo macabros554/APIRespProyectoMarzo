@@ -51,6 +51,22 @@ public class User {
 		this.telefono = telefono;
 		this.password = password;
 	}
+	
+	
+
+	public User(String name, String email, String calle, String telefono, String password, String tipopado,
+			String codigotarjeta, String tarjeta, String dueniotarjeta) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.calle = calle;
+		this.telefono = telefono;
+		this.password = password;
+		this.tipopado = tipopado;
+		this.codigotarjeta = codigotarjeta;
+		this.tarjeta = tarjeta;
+		this.dueniotarjeta = dueniotarjeta;
+	}
 
 	public String getName() {
 		return name;

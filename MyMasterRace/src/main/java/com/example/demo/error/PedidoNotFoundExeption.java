@@ -13,6 +13,6 @@ public class PedidoNotFoundExeption extends RuntimeException{
 	private static final long serialVersionUID = 7249817682006802176L;
 
 	public PedidoNotFoundExeption() {
-		super("El pedido tiene uno o mas valores vacios");
+		super("El usuario no tiene pedidos");
 	}
 }

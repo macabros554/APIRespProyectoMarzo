@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,14 +20,17 @@ import com.example.demo.error.ApiError;
 import com.example.demo.error.DiscoNotFoundExeption;
 import com.example.demo.error.FuenteNotFoundExeption;
 import com.example.demo.error.GraficaNotFoundExeption;
+import com.example.demo.error.ListaPedidosNotFoundExeption;
 import com.example.demo.error.OrdenadorInexistenteNotFoundExeption;
 import com.example.demo.error.PedidoNotFoundExeption;
+import com.example.demo.error.PedidoUsuarioNotFoundExeption;
 import com.example.demo.error.ProcesadorNotFoundExeption;
 import com.example.demo.error.RamNotFoundExeption;
 import com.example.demo.error.SocketNotFoundExeption;
 import com.example.demo.error.UserNotFoundExeption;
 import com.example.demo.model.Ordenador;
 import com.example.demo.model.Pedido;
+import com.example.demo.model.User;
 import com.example.demo.model.componentes.Disco;
 import com.example.demo.model.componentes.Fuente;
 import com.example.demo.model.componentes.Grafica;
@@ -150,10 +154,12 @@ public class UserController {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         p.setUsuario(serviceUsuario.buscarUsuario(email));
         
-        if(servicePedido.crearPedido(p)==null) {
+        Pedido pedido=servicePedido.crearPedido(p);
+        
+        if(pedido==null) {
         	throw new PedidoNotFoundExeption();
         }else {
-        	return ResponseEntity.ok(p);
+        	return ResponseEntity.ok(pedido);
         }
     }
     
@@ -166,10 +172,39 @@ public class UserController {
         }else {
         	return ResponseEntity.ok(resp);
         }
-    	
     }
     
-    /*@GetMapping("/usuario}")
+    @GetMapping("/pedido")
+    public ResponseEntity<List<Pedido>> mostrarPedidosUsuario() {
+    	String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       	List<Pedido> resp=servicePedido.pedidosDelUsuario(serviceUsuario.buscarUsuario(email));
+    	
+        if(resp==null) {
+        	throw new ListaPedidosNotFoundExeption();
+        }else {
+        	return ResponseEntity.ok(resp);
+        }
+    }
+    
+    @DeleteMapping("/pedido/{id}")
+    public ResponseEntity<Pedido> BorrarPedido(@PathVariable Long id) {
+    	String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	User usuario=serviceUsuario.buscarUsuario(email);
+    	
+        if(servicePedido.buscarPedido(id)==null) {
+        	throw new PedidoNotFoundExeption();
+        }else {
+        	if(servicePedido.comprobarPedido(usuario,id)==false) {
+        		throw new PedidoUsuarioNotFoundExeption(id,email);
+        	}else {
+        		serviceUsuario.borrarPedido(id,email);
+        		return ResponseEntity.ok(null);
+        	}
+        }
+    }
+    
+    
+    @GetMapping("/usuario")
     public ResponseEntity<User> mostrarDatosUsuario() {
     	String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
        	User resp=serviceUsuario.buscarUsuario(email);
@@ -180,7 +215,7 @@ public class UserController {
         	return ResponseEntity.ok(resp);
         }
     	
-    }*/
+    }
     
     
     
@@ -210,7 +245,15 @@ public class UserController {
     
     
     
-    
+    @ExceptionHandler(ListaPedidosNotFoundExeption.class)
+    public ResponseEntity<ApiError> ListaPedidosError(ListaPedidosNotFoundExeption ex) throws Exception {
+    	ApiError e = new ApiError();
+    	e.setEstado(HttpStatus.NOT_FOUND);
+    	e.setMensaje(ex.getMessage());
+    	e.setFecha(LocalDateTime.now());
+    	
+    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
+	}
     
     @ExceptionHandler(FuenteNotFoundExeption.class)
     public ResponseEntity<ApiError> FuentesError(FuenteNotFoundExeption ex) throws Exception {
