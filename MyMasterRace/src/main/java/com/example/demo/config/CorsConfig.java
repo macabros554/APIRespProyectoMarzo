@@ -32,6 +32,11 @@ public class CorsConfig implements WebMvcConfigurer {
 		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
 		                "Access-Control-Request-Headers","Authorization")
 		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
+				//añadir Ordenador
+				registry.addMapping("/ordenador").allowedOrigins("http://localhost:4200")
+		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+		                "Access-Control-Request-Headers","Authorization")
+		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
 				//ordenador
 				registry.addMapping("/ordenador/{id}/detalle").allowedOrigins("http://localhost:4200")
 		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
@@ -73,10 +78,15 @@ public class CorsConfig implements WebMvcConfigurer {
 		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT","DELETE", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
 		                "Access-Control-Request-Headers","Authorization")
 		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
-				
 				//usuario
 				registry.addMapping("/usuario").allowedOrigins("http://localhost:4200")
 		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+		                "Access-Control-Request-Headers","Authorization")
+		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
+				//borrar usuario
+				registry.addMapping("/usuario/{email}").allowedOrigins("http://localhost:4200")
+				.allowedMethods("GET", "POST", "OPTIONS", "PUT","DELETE")
+		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT","DELETE", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
 		                "Access-Control-Request-Headers","Authorization")
 		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
 			}

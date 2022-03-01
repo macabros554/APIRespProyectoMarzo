@@ -122,7 +122,7 @@ public class EjemploRestServiceJwtApplication {
 	
 	@Bean
 	CommandLineRunner iniOrdenador(OrdenadoresRepo repoOedenador) {
-		String enlace1="https://d10mhq06fikmnr.cloudfront.net/catalog/product/a/z/azza_rgb_os_mp-min_15.png";
+		String enlace1="https://i.ibb.co/GpLydf4/1.png";
 		String enlace2="https://static.carrefour.es/hd_510x_/imagenes/products/84254/02437/728/8425402437728/imagenGrande1.jpg";
 		String enlace3="https://d10mhq06fikmnr.cloudfront.net/catalog/product/h/u/hunter_rev2_main_rgb-min_4.png";
 		String enlace4="https://www.info-computer.com/65105-large_default/-pc-gaming-i5-9400-29-ghz-8gb-ddr4-ssd-480-gb-w10-home-oferta.jpg";

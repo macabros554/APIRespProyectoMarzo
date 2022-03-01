@@ -31,4 +31,44 @@ public class UsuarioService {
 		servicePedido.borrarPedido(id);
 	}
 	
+	public void borrarUsuario(String email) {
+		User usuario = repoUsuario.findByEmail(email).orElse(null);
+		List<Pedido> listaPedidos=usuario.getListapedidos();
+		for (Pedido pedido : listaPedidos) {
+			servicePedido.borrarPedido(pedido.getId());
+		}
+		repoUsuario.deleteById(email);
+	}
+	
+	public User modificarUsuario(User usuario) {
+		User elUsuario=repoUsuario.findByEmail(usuario.getEmail()).orElse(null);
+		
+		if (usuario.getCalle()!=null) {
+			elUsuario.setCalle(usuario.getCalle());
+		}
+		if(usuario.getCodigotarjeta()!=null) {
+			elUsuario.setCodigotarjeta(usuario.getCodigotarjeta());
+		}
+		if(usuario.getDueniotarjeta()!=null) {
+			elUsuario.setDueniotarjeta(usuario.getDueniotarjeta());
+		}
+		if(usuario.getName()!=null) {
+			elUsuario.setName(usuario.getName());
+		}
+		if(usuario.getPassword()!=null) {
+			elUsuario.setPassword(usuario.getPassword());
+		}
+		if(usuario.getTarjeta()!=null) {
+			elUsuario.setTarjeta(usuario.getTarjeta());
+		}
+		if(usuario.getTelefono()!=null) {
+			elUsuario.setTelefono(usuario.getTelefono());
+		}
+		if(usuario.getTipopado()!=null) {
+			elUsuario.setTipopado(usuario.getTipopado());
+		}
+		repoUsuario.save(elUsuario);
+		return elUsuario;
+	}
+	
 }

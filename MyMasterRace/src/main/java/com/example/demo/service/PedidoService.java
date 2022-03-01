@@ -1,11 +1,11 @@
 package com.example.demo.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.model.OrdenadorVendido;
 import com.example.demo.model.Pedido;
 import com.example.demo.model.User;
 import com.example.demo.repository.PedidoRepo;
@@ -25,7 +25,7 @@ public class PedidoService {
 	
 	
 	
-	public Pedido crearPedido(Pedido p) {
+/*	public Pedido crearPedido(Pedido p) {
 		if (comprobarPedido(p)==false) {
 			return null;
 		}
@@ -38,18 +38,36 @@ public class PedidoService {
 		pedidoNuevo.setTarjeta(p.getTarjeta());
 		pedidoNuevo.setDueniotarjeta(p.getDueniotarjeta());
 		pedidoNuevo.setTelefono(p.getTelefono());
-		pedidoNuevo.setTipopado(p.getTipopado());
+		pedidoNuevo.setTipopago(p.getTipopago());
 		pedidoNuevo.setUsuario(p.getUsuario());
-		pedidoNuevo.setOrdenador(serviceOrdenadorVendido.anadirOrdenador(p.getOrdenador()));
-		
-		
+		//pedidoNuevo.setOrdenador(serviceOrdenadorVendido.anadirOrdenador(p.getOrdenador()));
 		
 		repoPedido.save(pedidoNuevo);
 		
 		anadirPedidoAlUsuario(pedidoNuevo.getUsuario().getEmail(),pedidoNuevo.getId());
 		
+		return pedidoNuevo;
+	}*/
+	
+	public Pedido crearPedidoSinOrdendor(Pedido p) {
+		if (comprobarPedido(p)==false) {
+			return null;
+		}
+		Pedido pedidoNuevo=new Pedido();
+		repoPedido.save(pedidoNuevo);
 		
+		pedidoNuevo.setCorreoElectronico(p.getCorreoElectronico());
+		pedidoNuevo.setDireccion(p.getDireccion());
+		pedidoNuevo.setCodigotarjeta(p.getCodigotarjeta());
+		pedidoNuevo.setTarjeta(p.getTarjeta());
+		pedidoNuevo.setDueniotarjeta(p.getDueniotarjeta());
+		pedidoNuevo.setTelefono(p.getTelefono());
+		pedidoNuevo.setTipopago(p.getTipopago());
+		pedidoNuevo.setUsuario(p.getUsuario());
 		
+		repoPedido.save(pedidoNuevo);
+		
+		anadirPedidoAlUsuario(pedidoNuevo.getUsuario().getEmail(),pedidoNuevo.getId());
 		
 		return pedidoNuevo;
 	}
@@ -63,12 +81,24 @@ public class PedidoService {
 		
 	}
 	
+	public void anadirOrdenador(OrdenadorVendido ordenador,Long id) {
+		Pedido pedido=repoPedido.findById(id).orElse(null);
+		pedido.setOrdenador(ordenador);
+		repoPedido.save(pedido);
+	}
 	
 	public boolean comprobarPedido(Pedido p1) {
-		if(p1.getCorreoElectronico()==null || p1.getDireccion()==null || p1.getTelefono()==null || 
-				p1.getCodigotarjeta()==null || p1.getTarjeta()==null || p1.getDueniotarjeta()==null || p1.getTipopado() ==null ||
-				p1.getCorreoElectronico().equals("") || p1.getDireccion().equals("") || p1.getTelefono().equals("") ||
-				p1.getCodigotarjeta().equals("") || p1.getTarjeta().equals("") || p1.getTelefono().equals("") || p1.getTipopado().equals(""))	{
+		if(p1.getCorreoElectronico()==null || 
+				p1.getDireccion()==null || 
+				p1.getTelefono()==null || 
+				p1.getCodigotarjeta()==null || 
+				p1.getTarjeta()==null || 
+				p1.getDueniotarjeta()==null || 
+				p1.getTipopago() ==null ||
+				p1.getCorreoElectronico().equals("") || 
+				p1.getDireccion().equals("") || p1.getTelefono().equals("") ||
+				p1.getCodigotarjeta().equals("") || p1.getTarjeta().equals("") || 
+				p1.getTelefono().equals("") || p1.getTipopago().equals(""))	{
 			return false;
 		}else {
 			return true;

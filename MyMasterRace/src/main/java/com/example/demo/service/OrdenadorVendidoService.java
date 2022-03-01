@@ -6,10 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.OrdenadorVendido;
+import com.example.demo.model.Pedido;
+import com.example.demo.model.User;
 import com.example.demo.repository.OrdenadorVendidoRepo;
+import com.example.demo.repository.PedidoRepo;
 
 @Service("ordenadorVendidoService")
 public class OrdenadorVendidoService {
+	
+	@Autowired
+	private PedidoRepo repoPedido;
 	
 	@Autowired
 	private OrdenadorVendidoRepo repoOrdenadorVendido;
@@ -34,7 +40,7 @@ public class OrdenadorVendidoService {
 		return repoOrdenadorVendido.findById(id).orElse(null);
 	}
 	
-	public OrdenadorVendido anadirOrdenador(OrdenadorVendido nuevo) {
+	public OrdenadorVendido anadirOrdenador(OrdenadorVendido nuevo,Long id) {
 		OrdenadorVendido una= new OrdenadorVendido();
 		una.setNombre(nuevo.getNombre());
 		una.setRam(serviceRam.buscarRam(nuevo.getRam().getId()));
@@ -47,6 +53,11 @@ public class OrdenadorVendidoService {
 		una.setPrecio(nuevo.getPrecio());
 
 		repoOrdenadorVendido.save(una);
+		
+		Pedido pedido=repoPedido.findById(id).orElse(null);
+		pedido.setOrdenador(una);
+		repoPedido.save(pedido);
+
 		return una;
 	}
 	

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.example.demo.model.User;
 
-public interface UserRepo extends JpaRepository<User, Long> {
+public interface UserRepo extends JpaRepository<User, String> {
    //Método para obtener un usuario por su email
 	public Optional<User> findByEmail(String email);
 	@Query(value="select email from usuario where email = ?1", nativeQuery = true) 

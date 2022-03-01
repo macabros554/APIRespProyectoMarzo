@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,7 +24,7 @@ public class Pedido {
 	private String direccion;
 	private String telefono;
 	private String correoElectronico;
-	private String tipopado;
+	private String tipopago;
 	private String codigotarjeta;
 	private String tarjeta;
 	private String dueniotarjeta;
@@ -33,8 +34,8 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-    
-	@ManyToOne
+    @JsonBackReference
+	@OneToOne
 	private OrdenadorVendido ordenador;
     
 	public Pedido(Long id) {
@@ -50,7 +51,7 @@ public class Pedido {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.correoElectronico = correoElectronico;
-		this.tipopado = tipopado;
+		this.tipopago = tipopado;
 		this.codigotarjeta = codigotarjeta;
 		this.tarjeta = tarjeta;
 		this.dueniotarjeta = dueniotarjeta;
@@ -65,7 +66,7 @@ public class Pedido {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.correoElectronico = correoElectronico;
-		this.tipopado = tipopado;
+		this.tipopago = tipopado;
 		this.codigotarjeta = codigotarjeta;
 		this.tarjeta = tarjeta;
 		this.dueniotarjeta = dueniotarjeta;
@@ -131,12 +132,12 @@ public class Pedido {
 		this.ordenador = ordenador;
 	}
 
-	public String getTipopado() {
-		return tipopado;
+	public String getTipopago() {
+		return tipopago;
 	}
 
-	public void setTipopado(String tipopado) {
-		this.tipopado = tipopado;
+	public void setTipopago(String tipopago) {
+		this.tipopago = tipopago;
 	}
 
 	public String getCodigotarjeta() {

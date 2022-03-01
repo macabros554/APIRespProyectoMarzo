@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ import com.example.demo.error.DiscoNotFoundExeption;
 import com.example.demo.error.FuenteNotFoundExeption;
 import com.example.demo.error.GraficaNotFoundExeption;
 import com.example.demo.error.ListaPedidosNotFoundExeption;
+import com.example.demo.error.OrdenadorIncompletoFoundExeption;
 import com.example.demo.error.OrdenadorInexistenteNotFoundExeption;
 import com.example.demo.error.PedidoNotFoundExeption;
 import com.example.demo.error.PedidoUsuarioNotFoundExeption;
@@ -29,6 +31,7 @@ import com.example.demo.error.RamNotFoundExeption;
 import com.example.demo.error.SocketNotFoundExeption;
 import com.example.demo.error.UserNotFoundExeption;
 import com.example.demo.model.Ordenador;
+import com.example.demo.model.OrdenadorVendido;
 import com.example.demo.model.Pedido;
 import com.example.demo.model.User;
 import com.example.demo.model.componentes.Disco;
@@ -40,6 +43,7 @@ import com.example.demo.service.DiscoService;
 import com.example.demo.service.FuenteService;
 import com.example.demo.service.GraficaService;
 import com.example.demo.service.OrdenadorService;
+import com.example.demo.service.OrdenadorVendidoService;
 import com.example.demo.service.PedidoService;
 import com.example.demo.service.ProcesadorService;
 import com.example.demo.service.RamService;
@@ -51,6 +55,9 @@ public class UserController {
     
 	@Autowired
 	private OrdenadorService serviceOrdenador;
+	
+	@Autowired
+	private OrdenadorVendidoService serviceOrdenadorvendido;
     
 	@Autowired
 	private DiscoService serviceDisco;
@@ -154,7 +161,7 @@ public class UserController {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         p.setUsuario(serviceUsuario.buscarUsuario(email));
         
-        Pedido pedido=servicePedido.crearPedido(p);
+        Pedido pedido=servicePedido.crearPedidoSinOrdendor(p);
         
         if(pedido==null) {
         	throw new PedidoNotFoundExeption();
@@ -203,7 +210,6 @@ public class UserController {
         }
     }
     
-    
     @GetMapping("/usuario")
     public ResponseEntity<User> mostrarDatosUsuario() {
     	String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -215,6 +221,102 @@ public class UserController {
         	return ResponseEntity.ok(resp);
         }
     	
+    }
+    
+    @DeleteMapping("/usuario/{email}")
+    public ResponseEntity<User> borrarUsuario(@PathVariable String email) {
+       	User resp=serviceUsuario.buscarUsuario(email);
+    	
+        if(resp==null) {
+        	throw new UserNotFoundExeption(email);
+        }else {
+        	serviceUsuario.borrarUsuario(email);
+        	return ResponseEntity.ok(resp);
+        }
+    	
+    }
+    
+    @PutMapping("/usuario")
+    public ResponseEntity<User> modificarUsuario(@RequestBody User u) {
+       	User resp=serviceUsuario.buscarUsuario(u.getEmail());
+        if(resp==null) {
+        	throw new UserNotFoundExeption(u.getEmail());
+        }else {
+        	resp=serviceUsuario.modificarUsuario(u);
+        	return ResponseEntity.ok(resp);
+        }
+    }
+    
+    @PostMapping("pedido/{id}/ordenadornuevo")
+    public ResponseEntity<OrdenadorVendido> crearOrdenadorNuevo(@PathVariable Long id,@RequestBody OrdenadorVendido o) {
+    	OrdenadorVendido resp = o;
+        
+        if(resp==null) {
+        	throw new OrdenadorIncompletoFoundExeption();
+        }else {
+        	resp= serviceOrdenadorvendido.anadirOrdenador(o,id);
+        	return ResponseEntity.ok(resp);
+        }
+    }
+    
+    @PutMapping("pedido/{id}/ordenadornuevo")
+    public ResponseEntity<Ordenador> modificarOrdenadorNuevo(@RequestBody Ordenador o) {
+    	Ordenador resp = o;
+        
+        if(resp==null) {
+        	throw new OrdenadorIncompletoFoundExeption();
+        }else {
+        	resp= serviceOrdenador.anadirOrdenador(o);
+        	return ResponseEntity.ok(resp);
+        }
+    }
+    
+    @DeleteMapping("pedido/{id}/ordenadornuevo")
+    public ResponseEntity<Ordenador> borrarOrdenadorNuevo(@RequestBody Ordenador o) {
+    	Ordenador resp = o;
+        
+        if(resp==null) {
+        	throw new OrdenadorIncompletoFoundExeption();
+        }else {
+        	resp= serviceOrdenador.anadirOrdenador(o);
+        	return ResponseEntity.ok(resp);
+        }
+    }
+    
+    @PostMapping("/ordenador")
+    public ResponseEntity<Ordenador> crearOrdenador(@RequestBody Ordenador o) {
+    	Ordenador resp = o;
+        
+        if(resp==null) {
+        	throw new OrdenadorIncompletoFoundExeption();
+        }else {
+        	resp= serviceOrdenador.anadirOrdenador(o);
+        	return ResponseEntity.ok(resp);
+        }
+    }
+    
+    @PutMapping("/ordenador")
+    public ResponseEntity<Ordenador> modificarOrdenador(@RequestBody Ordenador o) {
+    	Ordenador resp = o;
+        
+        if(resp==null) {
+        	throw new OrdenadorIncompletoFoundExeption();
+        }else {
+        	resp= serviceOrdenador.anadirOrdenador(o);
+        	return ResponseEntity.ok(resp);
+        }
+    }
+    
+    @DeleteMapping("/ordenador")
+    public ResponseEntity<Ordenador> borrarOrdenador(@RequestBody Ordenador o) {
+    	Ordenador resp = o;
+        
+        if(resp==null) {
+        	throw new OrdenadorIncompletoFoundExeption();
+        }else {
+        	resp= serviceOrdenador.anadirOrdenador(o);
+        	return ResponseEntity.ok(resp);
+        }
     }
     
     
@@ -243,6 +345,16 @@ public class UserController {
     
     
     
+    
+    @ExceptionHandler(OrdenadorIncompletoFoundExeption.class)
+    public ResponseEntity<ApiError> ordenadorIncompletoError(OrdenadorIncompletoFoundExeption ex) throws Exception {
+    	ApiError e = new ApiError();
+    	e.setEstado(HttpStatus.BAD_REQUEST);
+    	e.setMensaje(ex.getMessage());
+    	e.setFecha(LocalDateTime.now());
+    	
+    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
+	}
     
     
     @ExceptionHandler(ListaPedidosNotFoundExeption.class)
