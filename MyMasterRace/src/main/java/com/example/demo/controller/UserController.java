@@ -33,6 +33,7 @@ import com.example.demo.error.UserNotFoundExeption;
 import com.example.demo.model.Ordenador;
 import com.example.demo.model.OrdenadorVendido;
 import com.example.demo.model.Pedido;
+import com.example.demo.model.PedidoDTO;
 import com.example.demo.model.User;
 import com.example.demo.model.componentes.Disco;
 import com.example.demo.model.componentes.Fuente;
@@ -88,6 +89,17 @@ public class UserController {
     @GetMapping("/ordenador/{id}/detalle")
     public ResponseEntity<Ordenador> sacarUnOrdenador(@PathVariable Long id) {
     	Ordenador result=serviceOrdenador.buscar(id);
+    	
+    	if (result==null) {
+			throw new OrdenadorInexistenteNotFoundExeption(id);
+		}else {
+	    	return ResponseEntity.ok(result);
+		}
+    }
+    
+    @GetMapping("pedido/{id}/ordenadornuevo")
+    public ResponseEntity<OrdenadorVendido> sacarOrdenadorDePedido(@PathVariable Long id) {
+    	OrdenadorVendido result=servicePedido.buscarPedido(id).getOrdenador();
     	
     	if (result==null) {
 			throw new OrdenadorInexistenteNotFoundExeption(id);
@@ -157,11 +169,9 @@ public class UserController {
     }
     
     @PostMapping("/pedido")
-    public ResponseEntity<Pedido> crearPedido(@RequestBody Pedido p) {
-        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        p.setUsuario(serviceUsuario.buscarUsuario(email));
-        
-        Pedido pedido=servicePedido.crearPedidoSinOrdendor(p);
+    public ResponseEntity<Pedido> crearPedido(@RequestBody PedidoDTO p) {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+        Pedido pedido=servicePedido.crearPedidoSinOrdendor(p,serviceUsuario.buscarUsuario(email));
         
         if(pedido==null) {
         	throw new PedidoNotFoundExeption();

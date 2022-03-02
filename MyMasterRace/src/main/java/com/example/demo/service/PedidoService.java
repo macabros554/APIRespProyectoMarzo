@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.model.OrdenadorVendido;
 import com.example.demo.model.Pedido;
+import com.example.demo.model.PedidoDTO;
 import com.example.demo.model.User;
 import com.example.demo.repository.PedidoRepo;
 import com.example.demo.repository.UserRepo;
@@ -49,7 +50,7 @@ public class PedidoService {
 		return pedidoNuevo;
 	}*/
 	
-	public Pedido crearPedidoSinOrdendor(Pedido p) {
+	public Pedido crearPedidoSinOrdendor(PedidoDTO p, User usuario) {
 		if (comprobarPedido(p)==false) {
 			return null;
 		}
@@ -63,7 +64,7 @@ public class PedidoService {
 		pedidoNuevo.setDueniotarjeta(p.getDueniotarjeta());
 		pedidoNuevo.setTelefono(p.getTelefono());
 		pedidoNuevo.setTipopago(p.getTipopago());
-		pedidoNuevo.setUsuario(p.getUsuario());
+		pedidoNuevo.setUsuario(usuario);
 		
 		repoPedido.save(pedidoNuevo);
 		
@@ -87,7 +88,7 @@ public class PedidoService {
 		repoPedido.save(pedido);
 	}
 	
-	public boolean comprobarPedido(Pedido p1) {
+	public boolean comprobarPedido(PedidoDTO p1) {
 		if(p1.getCorreoElectronico()==null || 
 				p1.getDireccion()==null || 
 				p1.getTelefono()==null || 

@@ -45,7 +45,7 @@ public class Pedido {
 
 
 	
-	public Pedido(String direccion, String telefono, String correoElectronico, String tipopado, String codigotarjeta,
+	/*public Pedido(String direccion, String telefono, String correoElectronico, String tipopado, String codigotarjeta,
 			String tarjeta, String dueniotarjeta, OrdenadorVendido ordenador) {
 		super();
 		this.direccion = direccion;
@@ -56,7 +56,7 @@ public class Pedido {
 		this.tarjeta = tarjeta;
 		this.dueniotarjeta = dueniotarjeta;
 		this.ordenador = ordenador;
-	}
+	}*/
 
 
 

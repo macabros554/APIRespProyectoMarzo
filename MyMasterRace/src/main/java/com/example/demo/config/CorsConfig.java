@@ -69,11 +69,18 @@ public class CorsConfig implements WebMvcConfigurer {
 		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
 				//Crear pedido
 				registry.addMapping("/pedido").allowedOrigins("http://localhost:4200")
-		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+				.allowedMethods("GET", "POST", "OPTIONS", "PUT","DELETE")
+		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT", "DELETE", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
 		                "Access-Control-Request-Headers","Authorization")
 		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
 				//leerPedido BorrarPedido
 				registry.addMapping("/pedido/{id}").allowedOrigins("http://localhost:4200")
+				.allowedMethods("GET", "POST", "OPTIONS", "PUT","DELETE")
+		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT","DELETE", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+		                "Access-Control-Request-Headers","Authorization")
+		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
+				
+				registry.addMapping("/pedido/{id}/ordenadornuevo").allowedOrigins("http://localhost:4200")
 				.allowedMethods("GET", "POST", "OPTIONS", "PUT","DELETE")
 		        .allowedHeaders("GET", "POST", "OPTIONS", "PUT","DELETE", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
 		                "Access-Control-Request-Headers","Authorization")
