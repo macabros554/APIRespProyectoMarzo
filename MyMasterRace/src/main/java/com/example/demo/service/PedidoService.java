@@ -110,6 +110,50 @@ public class PedidoService {
 		return repoPedido.findById(id).orElse(null);
 	}
 	
+	public Pedido modificarPedido(Long id, PedidoDTO p) {
+		Pedido pedido=repoPedido.findById(id).orElse(null);
+		
+		if(p.getCodigotarjeta()==null || p.getCodigotarjeta().equals("")) {
+			
+		}else {
+			pedido.setCodigotarjeta(p.getCodigotarjeta());
+		}
+		if(p.getCorreoElectronico()==null || p.getCorreoElectronico().equals("")) {
+			
+		}else {
+			pedido.setCorreoElectronico(p.getCorreoElectronico());
+		}
+		if(p.getDireccion()==null || p.getDireccion().equals("")) {
+			
+		}else {
+			pedido.setDireccion(p.getDireccion());
+		}
+		if(p.getDueniotarjeta()==null || p.getDueniotarjeta().equals("")) {
+			
+		}else {
+			pedido.setDueniotarjeta(p.getDueniotarjeta());
+		}
+		if(p.getTarjeta()==null || p.getTarjeta().equals("")) {
+			
+		}else {
+			pedido.setTarjeta(p.getTarjeta());
+		}
+		if(p.getTelefono()==null || p.getTelefono().equals("")) {
+			
+		}else {
+			pedido.setTelefono(p.getTelefono());
+		}
+		if(p.getTipopago()==null || p.getTipopago().equals("")) {
+			
+		}else {
+			pedido.setTipopago(p.getTipopago());
+		}
+		
+		repoPedido.save(pedido);
+		
+		return pedido;
+	}
+	
 	public List<Pedido> pedidosDelUsuario(User usuario){
 		
 		List<Pedido> listaDePedidos=null;

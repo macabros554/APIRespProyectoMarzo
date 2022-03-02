@@ -25,6 +25,7 @@ import com.example.demo.error.ListaPedidosNotFoundExeption;
 import com.example.demo.error.OrdenadorIncompletoFoundExeption;
 import com.example.demo.error.OrdenadorInexistenteNotFoundExeption;
 import com.example.demo.error.PedidoNotFoundExeption;
+import com.example.demo.error.PedidoReferenceNotFoundExeption;
 import com.example.demo.error.PedidoUsuarioNotFoundExeption;
 import com.example.demo.error.ProcesadorNotFoundExeption;
 import com.example.demo.error.RamNotFoundExeption;
@@ -80,11 +81,22 @@ public class UserController {
 	
 	@Autowired
 	private PedidoService servicePedido;
+	
+	/**
+	 * Metodo para sacar la lista completa de ordenadores guardados en la base de datos
+	 * @return lista de ordenadores
+	 */
     
     @GetMapping("/ordenador/listaOrdenadores")
     public ResponseEntity<List<Ordenador>> sacarOrdenadores() {
     	return ResponseEntity.ok(serviceOrdenador.findAll());
     }
+    
+    /**
+     * Saca el ordenador que le pidas por la id
+     * @param id
+     * @return ordenador
+     */
     
     @GetMapping("/ordenador/{id}/detalle")
     public ResponseEntity<Ordenador> sacarUnOrdenador(@PathVariable Long id) {
@@ -97,6 +109,12 @@ public class UserController {
 		}
     }
     
+    /**
+     * Saca el ordenador del cliente del pedido que le pases por la id
+     * @param id
+     * @return ordenador
+     */
+    
     @GetMapping("pedido/{id}/ordenadornuevo")
     public ResponseEntity<OrdenadorVendido> sacarOrdenadorDePedido(@PathVariable Long id) {
     	OrdenadorVendido result=servicePedido.buscarPedido(id).getOrdenador();
@@ -107,6 +125,12 @@ public class UserController {
 	    	return ResponseEntity.ok(result);
 		}
     }
+    
+    /**
+     * Saca los procesadore compatibles con ese ordenador apartir de la id del procesador que le pases
+     * @param id
+     * @return lista de procesadores
+     */
     
     @GetMapping("/componente/procesador/{id}")
     public ResponseEntity<List<Procesador>> procesadoresCompatibles(@PathVariable Long id) {
@@ -122,6 +146,12 @@ public class UserController {
 		}
     }
     
+    /**
+     * Saca las RAMs compatibles con ese ordenador apartir de la id del la RAM que le pases
+     * @param id
+     * @return lista de RAMs
+     */
+    
     @GetMapping("/componente/ram/{id}")
     public ResponseEntity<List<Ram>> ramCompatibles(@PathVariable Long id) {
     	if (serviceRam.buscarRam(id)==null) {
@@ -135,6 +165,14 @@ public class UserController {
 			}
 		}
     }
+    
+    /**
+     * Comprueba si el disco duro que le pases existe y si existe pasa todos los discos duros del servidor
+     * Mi verdad antes que pasaba la id del disco para que no pase ese disco en la peticion tenia sentido ahora no tanto
+     * Ahora mismo conserva la id para que la ruta en el securitiConfig sea para todos los componentes componentes/../..
+     * @param id
+     * @return
+     */
     
     @GetMapping("/componente/discos/{id}")
     public ResponseEntity<List<Disco>> discos(@PathVariable Long id) {
@@ -187,6 +225,18 @@ public class UserController {
         if(resp==null) {
         	throw new PedidoNotFoundExeption();
         }else {
+        	return ResponseEntity.ok(resp);
+        }
+    }
+    
+    @PutMapping("/pedido/{id}")
+    public ResponseEntity<Pedido> mmodificarPedido(@PathVariable Long id,@RequestBody PedidoDTO pedido) {
+       	Pedido resp=servicePedido.buscarPedido(id);
+    	
+        if(resp==null) {
+        	throw new PedidoNotFoundExeption();
+        }else {
+        	resp=servicePedido.modificarPedido(id, pedido);
         	return ResponseEntity.ok(resp);
         }
     }
@@ -270,26 +320,30 @@ public class UserController {
     }
     
     @PutMapping("pedido/{id}/ordenadornuevo")
-    public ResponseEntity<Ordenador> modificarOrdenadorNuevo(@RequestBody Ordenador o) {
-    	Ordenador resp = o;
+    public ResponseEntity<OrdenadorVendido> modificarOrdenadorNuevo(@PathVariable Long id,@RequestBody OrdenadorVendido o) {
+    	OrdenadorVendido resp = o;
         
-        if(resp==null) {
-        	throw new OrdenadorIncompletoFoundExeption();
+    	if(servicePedido.buscarPedido(id)==null) {
+        	throw new PedidoReferenceNotFoundExeption(id);
         }else {
-        	resp= serviceOrdenador.anadirOrdenador(o);
-        	return ResponseEntity.ok(resp);
+            if(resp==null) {
+            	throw new OrdenadorIncompletoFoundExeption();
+            }else {
+            	resp= serviceOrdenadorvendido.modificarOrdenador(o,id);
+            	return ResponseEntity.ok(resp);
+            }
         }
+
     }
     
     @DeleteMapping("pedido/{id}/ordenadornuevo")
-    public ResponseEntity<Ordenador> borrarOrdenadorNuevo(@RequestBody Ordenador o) {
-    	Ordenador resp = o;
+    public ResponseEntity<Ordenador> borrarOrdenadorNuevo(@PathVariable Long id) {
         
-        if(resp==null) {
-        	throw new OrdenadorIncompletoFoundExeption();
+        if(servicePedido.buscarPedido(id)==null) {
+        	throw new PedidoReferenceNotFoundExeption(id);
         }else {
-        	resp= serviceOrdenador.anadirOrdenador(o);
-        	return ResponseEntity.ok(resp);
+        	serviceOrdenadorvendido.borrarOrdenadorDePedido(id);
+        	return ResponseEntity.ok(null);
         }
     }
     
@@ -355,6 +409,19 @@ public class UserController {
     
     
     
+    
+    
+    
+    
+    @ExceptionHandler(PedidoReferenceNotFoundExeption.class)
+    public ResponseEntity<ApiError> pedidoSinOrdenadorError(PedidoReferenceNotFoundExeption ex) throws Exception {
+    	ApiError e = new ApiError();
+    	e.setEstado(HttpStatus.BAD_REQUEST);
+    	e.setMensaje(ex.getMessage());
+    	e.setFecha(LocalDateTime.now());
+    	
+    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
+	}
     
     @ExceptionHandler(OrdenadorIncompletoFoundExeption.class)
     public ResponseEntity<ApiError> ordenadorIncompletoError(OrdenadorIncompletoFoundExeption ex) throws Exception {
