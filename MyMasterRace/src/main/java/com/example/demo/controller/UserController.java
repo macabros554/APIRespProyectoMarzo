@@ -167,11 +167,11 @@ public class UserController {
     }
     
     /**
-     * Comprueba si el disco duro que le pases existe y si existe pasa todos los discos duros del servidor
+     * Comprueba si el disco duro que le pasas existe y si existe pasa todos los discos duros del servidor
      * Mi verdad antes que pasaba la id del disco para que no pase ese disco en la peticion tenia sentido ahora no tanto
-     * Ahora mismo conserva la id para que la ruta en el securitiConfig sea para todos los componentes componentes/../..
+     * Ahora mismo conserva la id para que la ruta en el securitiConfig sea para todos los componentes => componentes/../..
      * @param id
-     * @return
+     * @return lista de discos duros
      */
     
     @GetMapping("/componente/discos/{id}")
@@ -185,6 +185,12 @@ public class UserController {
 
     }
     
+    /**
+     * Comprueba si la grafica que le pasas existe y si existe pasa todas las graficas del servidor
+     * @param id
+     * @return lista de graficas
+     */
+    
     @GetMapping("/componente/graficas/{id}")
     public ResponseEntity<List<Grafica>> graficas(@PathVariable Long id) {
        	if (serviceGrafica.buscarGrafica(id)==null) {
@@ -193,8 +199,13 @@ public class UserController {
 	    	List<Grafica> result=serviceGrafica.findAllGraficas(id);
 	    	return ResponseEntity.ok(result);
 		}
-
     }
+    
+    /**
+     * Comprueba si la fuente que le pasas existe y si existe pasa todas las fuentes del servidor
+     * @param id
+     * @return lista de graficas
+     */
     
     @GetMapping("/componente/fuentes/{id}")
     public ResponseEntity<List<Fuente>> fuenetes(@PathVariable Long id) {
@@ -205,6 +216,12 @@ public class UserController {
 			return ResponseEntity.ok(result);
 		}
     }
+    
+    /**
+     * Crea el pedido que le pases siempre que no tenga un ordenador ni tenga campos vacios 
+     * @param p
+     * @return pedido
+     */
     
     @PostMapping("/pedido")
     public ResponseEntity<Pedido> crearPedido(@RequestBody PedidoDTO p) {
@@ -217,6 +234,12 @@ public class UserController {
         	return ResponseEntity.ok(pedido);
         }
     }
+    
+    /**
+     * Saca el pedido que le pidas por la id mientras exista en la base de datos
+     * @param id
+     * @return
+     */
     
     @GetMapping("/pedido/{id}")
     public ResponseEntity<Pedido> mostrarPedido(@PathVariable Long id) {
@@ -319,30 +342,30 @@ public class UserController {
         }
     }
     
-    @PutMapping("pedido/{id}/ordenadornuevo")
-    public ResponseEntity<OrdenadorVendido> modificarOrdenadorNuevo(@PathVariable Long id,@RequestBody OrdenadorVendido o) {
+    @PutMapping("pedido/{idPedido}/ordenadornuevo/{idOrdenador}")
+    public ResponseEntity<OrdenadorVendido> modificarOrdenadorNuevo(@PathVariable Long idPedido,@PathVariable Long idOrdenador,@RequestBody OrdenadorVendido o) {
     	OrdenadorVendido resp = o;
         
-    	if(servicePedido.buscarPedido(id)==null) {
-        	throw new PedidoReferenceNotFoundExeption(id);
+    	if(servicePedido.confirmarOrdenadorEnPedido(idPedido,idOrdenador)==null) {
+        	throw new PedidoReferenceNotFoundExeption(idPedido,idOrdenador);
         }else {
             if(resp==null) {
             	throw new OrdenadorIncompletoFoundExeption();
             }else {
-            	resp= serviceOrdenadorvendido.modificarOrdenador(o,id);
+            	resp= serviceOrdenadorvendido.modificarOrdenador(o,idPedido);
             	return ResponseEntity.ok(resp);
             }
         }
 
     }
     
-    @DeleteMapping("pedido/{id}/ordenadornuevo")
-    public ResponseEntity<Ordenador> borrarOrdenadorNuevo(@PathVariable Long id) {
+    @DeleteMapping("pedido/{idPedido}/ordenadornuevo/{idOrdenador}")
+    public ResponseEntity<Ordenador> borrarOrdenadorNuevo(@PathVariable Long idPedido,@PathVariable Long idOrdenador) {
         
-        if(servicePedido.buscarPedido(id)==null) {
-        	throw new PedidoReferenceNotFoundExeption(id);
+        if(servicePedido.confirmarOrdenadorEnPedido(idPedido,idOrdenador)==null) {
+        	throw new PedidoReferenceNotFoundExeption(idPedido,idOrdenador);
         }else {
-        	serviceOrdenadorvendido.borrarOrdenadorDePedido(id);
+        	serviceOrdenadorvendido.borrarOrdenadorDePedido(idPedido);
         	return ResponseEntity.ok(null);
         }
     }

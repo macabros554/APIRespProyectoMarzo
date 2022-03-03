@@ -18,6 +18,12 @@ public class UsuarioService {
 	@Autowired
 	private PedidoService servicePedido;
 	
+	/**
+	 * busca un usuario en la base de datos por su id y si no lo encuentra devuelve null
+	 * @param id
+	 * @return usuario
+	 */
+	
 	public User buscarUsuario(String email) {
 		return repoUsuario.findByEmail(email).orElse(null);
 	}

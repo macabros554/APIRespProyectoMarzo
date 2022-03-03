@@ -1,10 +1,7 @@
 package com.example.demo.model;
 
-import java.sql.Date;
-
 public class PedidoDTO {
-
-	private Date fechaPack;
+	
 	private String direccion;
 	private String telefono;
 	private String correoElectronico;
@@ -27,14 +24,6 @@ public class PedidoDTO {
 
 	public PedidoDTO() {
 		super();
-	}
-
-	public Date getFechaPack() {
-		return fechaPack;
-	}
-
-	public void setFechaPack(Date fechaPack) {
-		this.fechaPack = fechaPack;
 	}
 
 	public String getDireccion() {
@@ -95,7 +84,7 @@ public class PedidoDTO {
 
 	@Override
 	public String toString() {
-		return "PedidoDTO [fechaPack=" + fechaPack + ", direccion=" + direccion + ", telefono=" + telefono
+		return "PedidoDTO [direccion=" + direccion + ", telefono=" + telefono
 				+ ", correoElectronico=" + correoElectronico + ", tipopago=" + tipopago + ", codigotarjeta="
 				+ codigotarjeta + ", tarjeta=" + tarjeta + ", dueniotarjeta=" + dueniotarjeta + "]";
 	}

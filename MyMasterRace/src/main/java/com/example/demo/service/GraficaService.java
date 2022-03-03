@@ -16,6 +16,12 @@ public class GraficaService {
 	@Autowired
 	private GraficaRepo repoGrafica;
 	
+	/**
+	 * busca una grafica en la base de datos por su id y si no lo encuentra devuelve null
+	 * @param id
+	 * @return grafica
+	 */
+	
 	public Grafica buscarGrafica(Long id) {
 		return repoGrafica.findById(id).orElse(null);
 	}

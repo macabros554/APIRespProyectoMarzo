@@ -15,6 +15,12 @@ public class FuenteService {
 	@Autowired
 	private FuenteRepo repoFuente;
 	
+	/**
+	 * busca una fuente en la base de datos por su id y si no lo encuentra devuelve null
+	 * @param id
+	 * @return
+	 */
+	
 	public Fuente buscarFuente(Long id) {
 		return repoFuente.findById(id).orElse(null);
 	}

@@ -24,32 +24,6 @@ public class PedidoService {
 	@Autowired
 	private OrdenadorVendidoService serviceOrdenadorVendido;
 	
-	
-	
-/*	public Pedido crearPedido(Pedido p) {
-		if (comprobarPedido(p)==false) {
-			return null;
-		}
-		Pedido pedidoNuevo=new Pedido();
-		repoPedido.save(pedidoNuevo);
-		
-		pedidoNuevo.setCorreoElectronico(p.getCorreoElectronico());
-		pedidoNuevo.setDireccion(p.getDireccion());
-		pedidoNuevo.setCodigotarjeta(p.getCodigotarjeta());
-		pedidoNuevo.setTarjeta(p.getTarjeta());
-		pedidoNuevo.setDueniotarjeta(p.getDueniotarjeta());
-		pedidoNuevo.setTelefono(p.getTelefono());
-		pedidoNuevo.setTipopago(p.getTipopago());
-		pedidoNuevo.setUsuario(p.getUsuario());
-		//pedidoNuevo.setOrdenador(serviceOrdenadorVendido.anadirOrdenador(p.getOrdenador()));
-		
-		repoPedido.save(pedidoNuevo);
-		
-		anadirPedidoAlUsuario(pedidoNuevo.getUsuario().getEmail(),pedidoNuevo.getId());
-		
-		return pedidoNuevo;
-	}*/
-	
 	public Pedido crearPedidoSinOrdendor(PedidoDTO p, User usuario) {
 		if (comprobarPedido(p)==false) {
 			return null;
@@ -106,8 +80,23 @@ public class PedidoService {
 		}
 	}
 	
+	/**
+	 * busca un pedido en la base de datos por su id y si no lo encuentra devuelve null
+	 * @param id
+	 * @return pedido
+	 */
+	
 	public Pedido buscarPedido(Long id) {
 		return repoPedido.findById(id).orElse(null);
+	}
+	
+	public Pedido confirmarOrdenadorEnPedido(Long idPedido,Long idOrdenador) {
+		Pedido pedido= repoPedido.findById(idPedido).orElse(null);
+		if(pedido.getOrdenador().getId()==idOrdenador) {
+			return pedido;
+		}else {
+			return null;
+		}
 	}
 	
 	public Pedido modificarPedido(Long id, PedidoDTO p) {

@@ -15,6 +15,12 @@ public class ProcesadorService {
 	@Autowired
 	private ProcesadorRepo repoProcesador;
 	
+	/**
+	 * busca un procesador en la base de datos por su id y si no lo encuentra devuelve null
+	 * @param id
+	 * @return procesador
+	 */
+	
 	public Procesador buscarProcesador(Long id) {
 		return repoProcesador.findById(id).orElse(null);
 	}

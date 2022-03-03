@@ -29,6 +29,11 @@ public class OrdenadorService {
 	@Autowired
 	private GraficaService serviceGrafica;
 	
+	/**
+	 * busca un ordenador en la base de datos por su id y si no lo encuentra devuelve null
+	 * @param id
+	 * @return ordenador
+	 */
 	
 	public Ordenador buscar(Long id) {
 		return repoOrdenador.findById(id).orElse(null);

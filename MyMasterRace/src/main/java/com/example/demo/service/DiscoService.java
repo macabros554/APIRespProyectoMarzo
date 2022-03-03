@@ -15,6 +15,12 @@ public class DiscoService {
 	@Autowired
 	private DiscoRepo repoDisco;
 	
+	/**
+	 * busca un disco en la base de datos por su id y si no lo encuentra devuelve null
+	 * @param id
+	 * @return
+	 */
+	
 	public Disco buscarDisco(Long id) {
 		return repoDisco.findById(id).orElse(null);
 	}

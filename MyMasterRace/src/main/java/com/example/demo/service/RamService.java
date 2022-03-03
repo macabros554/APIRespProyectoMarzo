@@ -15,6 +15,12 @@ public class RamService {
 	@Autowired
 	private RamRepo repoRam;
 	
+	/**
+	 * busca una RAM en la base de datos por su id y si no lo encuentra devuelve null
+	 * @param id
+	 * @return Ram
+	 */
+	
 	public Ram buscarRam(Long id) {
 		return repoRam.findById(id).orElse(null);
 	}

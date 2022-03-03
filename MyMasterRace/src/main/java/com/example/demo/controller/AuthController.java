@@ -82,14 +82,24 @@ public class AuthController {
     	
     }
     
-    @ExceptionHandler(ContrasenaNotFoundExeption.class)
-    public ResponseEntity<ApiError> contrasenaError(ContrasenaNotFoundExeption ex) throws Exception {
+    @ExceptionHandler(ExisteUsuarioNotFoundExeption.class)
+    public ResponseEntity<ApiError> registrarError(ExisteUsuarioNotFoundExeption ex) throws Exception {
     	ApiError e = new ApiError();
-    	e.setEstado(HttpStatus.NOT_FOUND);
+    	e.setEstado(HttpStatus.BAD_REQUEST);
     	e.setMensaje(ex.getMessage());
     	e.setFecha(LocalDateTime.now());
     	
-    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
+    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+	} 
+    
+    @ExceptionHandler(ContrasenaNotFoundExeption.class)
+    public ResponseEntity<ApiError> contrasenaError(ContrasenaNotFoundExeption ex) throws Exception {
+    	ApiError e = new ApiError();
+    	e.setEstado(HttpStatus.BAD_REQUEST);
+    	e.setMensaje(ex.getMessage());
+    	e.setFecha(LocalDateTime.now());
+    	
+    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
 	} 
     
     @ExceptionHandler(TokenNoValidoExeption.class)
