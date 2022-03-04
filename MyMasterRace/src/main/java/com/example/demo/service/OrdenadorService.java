@@ -55,6 +55,11 @@ public class OrdenadorService {
 		return una;
 	}
 	
+	/**
+	 * saca una lista de todos los ordenadores a la venta del repositorio
+	 * @return
+	 */
+	
 	public List<Ordenador> findAll(){
 		return repoOrdenador.findAll();
 	}

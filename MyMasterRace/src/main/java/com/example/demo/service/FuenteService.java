@@ -25,6 +25,12 @@ public class FuenteService {
 		return repoFuente.findById(id).orElse(null);
 	}
 	
+	/**
+	 * Añade la fuente que le pases al repositorio de fuentes
+	 * @param nuevo
+	 * @return
+	 */
+	
 	public Fuente anadirFuente(Fuente nuevo) {
 		Fuente una= new Fuente();
 		una.setCertificacion(nuevo.getCertificacion());
@@ -34,6 +40,12 @@ public class FuenteService {
 		repoFuente.save(una);
 		return una;
 	}
+	
+	/**
+	 * muestra la lista de fuentes de alimentasion
+	 * @param id
+	 * @return
+	 */
 	
 	public List<Fuente> findAllFuentes(Long id){
 		List<Fuente> listaFuentes=new ArrayList<>();

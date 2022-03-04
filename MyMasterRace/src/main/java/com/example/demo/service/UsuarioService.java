@@ -28,6 +28,12 @@ public class UsuarioService {
 		return repoUsuario.findByEmail(email).orElse(null);
 	}
 	
+	/**
+	 * borra del usuario que le indiquemos el pedido que le indiquemos
+	 * @param id
+	 * @param email
+	 */
+	
 	public void borrarPedido(Long id, String email) {
 		User usuario = repoUsuario.findByEmail(email).orElse(null);
 		List<Pedido> listaPedidos=usuario.getListapedidos();
@@ -37,6 +43,11 @@ public class UsuarioService {
 		servicePedido.borrarPedido(id);
 	}
 	
+	/**
+	 * borra el usuario que le indiquemos
+	 * @param email
+	 */
+	
 	public void borrarUsuario(String email) {
 		User usuario = repoUsuario.findByEmail(email).orElse(null);
 		List<Pedido> listaPedidos=usuario.getListapedidos();
@@ -45,6 +56,12 @@ public class UsuarioService {
 		}
 		repoUsuario.deleteById(email);
 	}
+	
+	/**
+	 * modifica el usuario que le indiquemos con los datos que le indiquemos
+	 * @param usuario
+	 * @return
+	 */
 	
 	public User modificarUsuario(User usuario) {
 		User elUsuario=repoUsuario.findByEmail(usuario.getEmail()).orElse(null);

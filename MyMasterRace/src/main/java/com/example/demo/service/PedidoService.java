@@ -24,6 +24,13 @@ public class PedidoService {
 	@Autowired
 	private OrdenadorVendidoService serviceOrdenadorVendido;
 	
+	/**
+	 * crea el pedido que le pases en el usuario que le pases
+	 * @param p
+	 * @param usuario
+	 * @return
+	 */
+	
 	public Pedido crearPedidoSinOrdendor(PedidoDTO p, User usuario) {
 		if (comprobarPedido(p)==false) {
 			return null;
@@ -47,6 +54,12 @@ public class PedidoService {
 		return pedidoNuevo;
 	}
 	
+	/**
+	 * añade el pedido que le pases al usuario que le pases
+	 * @param email
+	 * @param id
+	 */
+	
 	private void anadirPedidoAlUsuario(String email,Long id) {
 		User usuario=repoUsuario.findByEmail(email).orElse(null);
 		Pedido pedido= repoPedido.findById(id).orElse(null);
@@ -56,11 +69,23 @@ public class PedidoService {
 		
 	}
 	
+	/**
+	 * añade el ordenador que le pases al pedido que le pases
+	 * @param ordenador
+	 * @param id
+	 */
+	
 	public void anadirOrdenador(OrdenadorVendido ordenador,Long id) {
 		Pedido pedido=repoPedido.findById(id).orElse(null);
 		pedido.setOrdenador(ordenador);
 		repoPedido.save(pedido);
 	}
+	
+	/**
+	 * comprobaciones para verificar que no envian un pedido con valores nulos
+	 * @param p1
+	 * @return
+	 */
 	
 	public boolean comprobarPedido(PedidoDTO p1) {
 		if(p1.getCorreoElectronico()==null || 
@@ -90,6 +115,13 @@ public class PedidoService {
 		return repoPedido.findById(id).orElse(null);
 	}
 	
+	/**
+	 * confirma si el pedido tiene el ordenador que le pasas
+	 * @param idPedido
+	 * @param idOrdenador
+	 * @return
+	 */
+	
 	public Pedido confirmarOrdenadorEnPedido(Long idPedido,Long idOrdenador) {
 		Pedido pedido= repoPedido.findById(idPedido).orElse(null);
 		if(pedido.getOrdenador().getId()==idOrdenador) {
@@ -98,6 +130,13 @@ public class PedidoService {
 			return null;
 		}
 	}
+	
+	/**
+	 * modifica el pedido con los datos no nulos que envies
+	 * @param id
+	 * @param p
+	 * @return
+	 */
 	
 	public Pedido modificarPedido(Long id, PedidoDTO p) {
 		Pedido pedido=repoPedido.findById(id).orElse(null);
@@ -143,6 +182,12 @@ public class PedidoService {
 		return pedido;
 	}
 	
+	/**
+	 * devuelve la lista de pedidos del usuario
+	 * @param usuario
+	 * @return
+	 */
+	
 	public List<Pedido> pedidosDelUsuario(User usuario){
 		
 		List<Pedido> listaDePedidos=null;
@@ -152,6 +197,12 @@ public class PedidoService {
 		
 		return listaDePedidos;
 	}
+	/**
+	 * comprueba si el usuario tiene un pedido concreto
+	 * @param usuario
+	 * @param id
+	 * @return
+	 */
 	
 	public boolean comprobarPedido(User usuario,Long id) {
 		
@@ -165,6 +216,11 @@ public class PedidoService {
 		}
 		return cajita;
 	}
+	
+	/**
+	 * borra un pedido y posteriro mente llama a borrar ordenador del service ordenadorVendido
+	 * @param id
+	 */
 	
 	public void borrarPedido(Long id){
 		Pedido pedido=buscarPedido(id);

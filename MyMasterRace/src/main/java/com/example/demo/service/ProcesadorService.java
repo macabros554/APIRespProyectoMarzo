@@ -25,6 +25,12 @@ public class ProcesadorService {
 		return repoProcesador.findById(id).orElse(null);
 	}
 	
+	/**
+	 * añade el procesador que le pases al repositorio
+	 * @param nuevo
+	 * @return
+	 */
+	
 	public Procesador anadirProcesador(Procesador nuevo) {
 		Procesador una= new Procesador();
 		una.setMarca(nuevo.getMarca());
@@ -35,6 +41,12 @@ public class ProcesadorService {
 		repoProcesador.save(una);
 		return una;
 	}
+	
+	/**
+	 * Saca una lista con los procesadores comptatibles segun el procesador que le pase
+	 * @param id
+	 * @return
+	 */
 	
 	public List<Procesador> listarProcesadoresCompatibles(Long id){
 		Procesador referencia=buscarProcesador(id);

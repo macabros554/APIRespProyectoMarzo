@@ -94,11 +94,12 @@ public class UserController {
     
     /**
      * Saca el ordenador que le pidas por la id
+     * El ordenador que saca es de los que estan en venta no de los usuarios
      * @param id
      * @return ordenador
      */
     
-    @GetMapping("/ordenador/{id}/detalle")
+    @GetMapping("/ordenador/{id}")
     public ResponseEntity<Ordenador> sacarUnOrdenador(@PathVariable Long id) {
     	Ordenador result=serviceOrdenador.buscar(id);
     	
@@ -252,6 +253,13 @@ public class UserController {
         }
     }
     
+    /**
+     * Modifica el pedido que le digas por la id con los datos que le envies del pedido
+     * @param id
+     * @param pedido
+     * @return
+     */
+    
     @PutMapping("/pedido/{id}")
     public ResponseEntity<Pedido> mmodificarPedido(@PathVariable Long id,@RequestBody PedidoDTO pedido) {
        	Pedido resp=servicePedido.buscarPedido(id);
@@ -264,6 +272,11 @@ public class UserController {
         }
     }
     
+    /**
+     * Devuelve la lista de pedidos del usuario sacando el usuario del token
+     * @return
+     */
+    
     @GetMapping("/pedido")
     public ResponseEntity<List<Pedido>> mostrarPedidosUsuario() {
     	String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -275,6 +288,12 @@ public class UserController {
         	return ResponseEntity.ok(resp);
         }
     }
+    
+    /**
+     * Borra el pedido que le pases pir la id, si el usuario no tiene ese pedido no lo borrara
+     * @param id
+     * @return
+     */
     
     @DeleteMapping("/pedido/{id}")
     public ResponseEntity<Pedido> BorrarPedido(@PathVariable Long id) {
@@ -293,6 +312,12 @@ public class UserController {
         }
     }
     
+    /**
+     * Sacas los datos del usuario
+     * saca el usuario del token
+     * @return
+     */
+    
     @GetMapping("/usuario")
     public ResponseEntity<User> mostrarDatosUsuario() {
     	String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -303,8 +328,14 @@ public class UserController {
         }else {
         	return ResponseEntity.ok(resp);
         }
-    	
     }
+    
+    /**
+     * borra el usuario que le pase por la id
+     * deberia hacer otro metodo para que el usuario pueda borrarse a si mismo
+     * @param email
+     * @return
+     */
     
     @DeleteMapping("/usuario/{email}")
     public ResponseEntity<User> borrarUsuario(@PathVariable String email) {
@@ -319,6 +350,12 @@ public class UserController {
     	
     }
     
+    /**
+     * modifica los datos del usuario con los datos que le envie por el body
+     * @param u
+     * @return
+     */
+    
     @PutMapping("/usuario")
     public ResponseEntity<User> modificarUsuario(@RequestBody User u) {
        	User resp=serviceUsuario.buscarUsuario(u.getEmail());
@@ -329,6 +366,15 @@ public class UserController {
         	return ResponseEntity.ok(resp);
         }
     }
+    
+    /**
+     * crea un ordenador dentro del pedido que le pase por la id
+     * @param id
+     * @param o
+     * @return
+     */
+    
+    //añadir que confirme si el usuario tiene el pedido
     
     @PostMapping("pedido/{id}/ordenadornuevo")
     public ResponseEntity<OrdenadorVendido> crearOrdenadorNuevo(@PathVariable Long id,@RequestBody OrdenadorVendido o) {
@@ -341,6 +387,14 @@ public class UserController {
         	return ResponseEntity.ok(resp);
         }
     }
+    
+    /**
+     * modifica el ordenador que le pase por la id si el ordenador esta en el pedido que pase por la id
+     * @param idPedido
+     * @param idOrdenador
+     * @param o
+     * @return
+     */
     
     @PutMapping("pedido/{idPedido}/ordenadornuevo/{idOrdenador}")
     public ResponseEntity<OrdenadorVendido> modificarOrdenadorNuevo(@PathVariable Long idPedido,@PathVariable Long idOrdenador,@RequestBody OrdenadorVendido o) {
@@ -356,8 +410,14 @@ public class UserController {
             	return ResponseEntity.ok(resp);
             }
         }
-
     }
+    
+    /**
+     * borra el ordenador si esta en el pedido que le pasas y si el ordenador existe
+     * @param idPedido
+     * @param idOrdenador
+     * @return
+     */
     
     @DeleteMapping("pedido/{idPedido}/ordenadornuevo/{idOrdenador}")
     public ResponseEntity<Ordenador> borrarOrdenadorNuevo(@PathVariable Long idPedido,@PathVariable Long idOrdenador) {
@@ -369,6 +429,12 @@ public class UserController {
         	return ResponseEntity.ok(null);
         }
     }
+    
+    /**
+     * Crea un nuevo ordenador que se mostrara en la tienda
+     * @param o
+     * @return
+     */
     
     @PostMapping("/ordenador")
     public ResponseEntity<Ordenador> crearOrdenador(@RequestBody Ordenador o) {
@@ -382,6 +448,8 @@ public class UserController {
         }
     }
     
+    /*
+    
     @PutMapping("/ordenador")
     public ResponseEntity<Ordenador> modificarOrdenador(@RequestBody Ordenador o) {
     	Ordenador resp = o;
@@ -394,6 +462,7 @@ public class UserController {
         }
     }
     
+    
     @DeleteMapping("/ordenador")
     public ResponseEntity<Ordenador> borrarOrdenador(@RequestBody Ordenador o) {
     	Ordenador resp = o;
@@ -405,6 +474,7 @@ public class UserController {
         	return ResponseEntity.ok(resp);
         }
     }
+    */
     
     
     
@@ -433,8 +503,12 @@ public class UserController {
     
     
     
-    
-    
+    /**
+     * excepciones 
+     * @param ex
+     * @return
+     * @throws Exception
+     */
     
     @ExceptionHandler(PedidoReferenceNotFoundExeption.class)
     public ResponseEntity<ApiError> pedidoSinOrdenadorError(PedidoReferenceNotFoundExeption ex) throws Exception {

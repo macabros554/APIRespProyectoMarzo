@@ -25,6 +25,12 @@ public class RamService {
 		return repoRam.findById(id).orElse(null);
 	}
 	
+	/**
+	 * Añade la ram que le pase al repositorio de RAMs
+	 * @param nuevo
+	 * @return
+	 */
+	
 	public Ram anadirRam(Ram nuevo) {
 		Ram una= new Ram();
 		una.setNombre(nuevo.getNombre());
@@ -36,6 +42,12 @@ public class RamService {
 		repoRam.save(una);
 		return una;
 	}
+	
+	/**
+	 * Saca las RAMs compatible segun la ram que le pase
+	 * @param id
+	 * @return
+	 */
 	
 	public List<Ram> listarRamsCompatibles(Long id){
 		

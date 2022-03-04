@@ -40,6 +40,13 @@ public class AuthController {
     @Autowired private AuthenticationManager authManager;
     @Autowired private PasswordEncoder passwordEncoder;
 	@Autowired private UsuarioService serviceUsuario;
+	
+	
+	/**
+	 * registra al usuario y si el email no deja registrarse
+	 * @param user
+	 * @return
+	 */
 
     @PostMapping("/auth/register")
     public Map<String, Object> registerHandler(@RequestBody User user){
@@ -53,6 +60,12 @@ public class AuthController {
 			throw new ExisteUsuarioNotFoundExeption();
 		}
     }
+    
+    /**
+     * logea al usuario y le genera un token que contiene su email
+     * @param body
+     * @return
+     */
 
     @PostMapping("/auth/login")
     public Map<String, Object> loginHandler(@RequestBody LoginCredentials body){
@@ -70,6 +83,12 @@ public class AuthController {
         }
     }
     
+    /**
+     * debuelve el email del usuario 
+     * solo lo uso para verificar que tengo un token valido
+     * @return
+     */
+    
     @GetMapping("/validarToken")
     public ResponseEntity<User> validarToken() {
     	try {
@@ -81,6 +100,14 @@ public class AuthController {
 		}
     	
     }
+    
+    
+    
+    
+    
+    
+    
+    
     
     @ExceptionHandler(ExisteUsuarioNotFoundExeption.class)
     public ResponseEntity<ApiError> registrarError(ExisteUsuarioNotFoundExeption ex) throws Exception {

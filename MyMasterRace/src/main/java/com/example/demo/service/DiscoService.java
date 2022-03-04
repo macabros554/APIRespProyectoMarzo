@@ -25,6 +25,12 @@ public class DiscoService {
 		return repoDisco.findById(id).orElse(null);
 	}
 	
+	/**
+	 * añade el disco que le pases a la base de datos
+	 * @param nuevo
+	 * @return
+	 */
+	
 	public Disco anadirDisco(Disco nuevo) {
 		Disco una= new Disco();
 		una.setCapacidad(nuevo.getCapacidad());
@@ -34,6 +40,12 @@ public class DiscoService {
 		repoDisco.save(una);
 		return una;
 	}
+	
+	/**
+	 * muestra todos los discos de la base de datos
+	 * @param id
+	 * @return
+	 */
 	
 	public List<Disco> findAllDiscos(Long id){
 		List<Disco> listadiscos=new ArrayList<>();

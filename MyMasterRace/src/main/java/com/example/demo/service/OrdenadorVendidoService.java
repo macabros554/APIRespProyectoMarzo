@@ -49,6 +49,13 @@ public class OrdenadorVendidoService {
 		return repoOrdenadorVendido.findById(id).orElse(null);
 	}
 	
+	/**
+	 * crea el ordenador que le pases en el pedido que le pases por id
+	 * @param nuevo
+	 * @param id
+	 * @return
+	 */
+	
 	public OrdenadorVendido anadirOrdenador(OrdenadorVendido nuevo,Long id) {
 		OrdenadorVendido una= new OrdenadorVendido();
 		una.setNombre(nuevo.getNombre());
@@ -75,6 +82,13 @@ public class OrdenadorVendidoService {
 
 		return una;
 	}
+	
+	/**
+	 * modifica los valores no nulos del ordenador que le pases del pedido que le pases
+	 * @param nuevo
+	 * @param id
+	 * @return
+	 */
 	
 	public OrdenadorVendido modificarOrdenador(OrdenadorVendido nuevo,Long id) {
 		Pedido pedido= repoPedido.findById(id).orElse(null);
@@ -113,13 +127,29 @@ public class OrdenadorVendidoService {
 		return null;
 	}
 	
+	/**
+	 * devuelve todos los ordenadores que se han comprado
+	 * @return
+	 */
+	
 	public List<OrdenadorVendido> findAll(){
 		return repoOrdenadorVendido.findAll();
 	}
 	
+	/**
+	 * Borra el ordenador si ya de ha borrado del pedido
+	 * si no lo has borrado antes del pedido usar siguiente metodo
+	 * @param id
+	 */
+	
 	public void borrarOrdenador(Long id) {
 		repoOrdenadorVendido.deleteById(id);
 	}
+	
+	/**
+	 * borra el ordenador del pedido y luego borra el ordenador
+	 * @param id
+	 */
 	
 	public void borrarOrdenadorDePedido(Long id) {
 		Pedido pedido= repoPedido.findById(id).orElse(null);

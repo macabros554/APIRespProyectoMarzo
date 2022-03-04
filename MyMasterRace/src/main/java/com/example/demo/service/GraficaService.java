@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.componentes.Fuente;
 import com.example.demo.model.componentes.Grafica;
 import com.example.demo.repository.GraficaRepo;
 
@@ -26,6 +25,12 @@ public class GraficaService {
 		return repoGrafica.findById(id).orElse(null);
 	}
 	
+	/**
+	 * Añade una grafica al repositorio de graficas
+	 * @param nuevo
+	 * @return
+	 */
+	
 	public Grafica anadirGrafica(Grafica nuevo) {
 		Grafica una= new Grafica();
 		una.setMarca(nuevo.getMarca());
@@ -35,6 +40,12 @@ public class GraficaService {
 		repoGrafica.save(una);
 		return una;
 	}
+	
+	/**
+	 * saca una lista de todas las graficas de la base de datos
+	 * @param id
+	 * @return
+	 */
 
 	public List<Grafica> findAllGraficas(Long id){
 		List<Grafica> listaGraficas=new ArrayList<>();
