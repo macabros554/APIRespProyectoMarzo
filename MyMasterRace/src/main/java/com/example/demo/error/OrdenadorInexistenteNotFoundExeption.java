@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class OrdenadorInexistenteNotFoundExeption extends RuntimeException{
 
 	/**
-	 * 
+	 * Esta excepcion solo se deberia de ver cuando intentas buscar un ordenador que no existe
 	 */
 	private static final long serialVersionUID = -6961015155150928005L;
 

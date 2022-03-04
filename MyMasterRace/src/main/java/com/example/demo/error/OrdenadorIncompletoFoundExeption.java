@@ -8,7 +8,7 @@ public class OrdenadorIncompletoFoundExeption extends RuntimeException{
 	
 
 	/**
-	 * 
+	 * Esta excepcion solo se deberia de ver cuando se le introduce campos vacios al ordenador
 	 */
 	private static final long serialVersionUID = -3865325573197962604L;
 

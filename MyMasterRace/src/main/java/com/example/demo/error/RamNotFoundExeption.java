@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class RamNotFoundExeption extends RuntimeException{
 
 	/**
-	 * 
+	 * Esta excepcion solo se deberia de ver cuando no existe una RAM con la id introducida
 	 */
 	private static final long serialVersionUID = 4358256116769035539L;
 

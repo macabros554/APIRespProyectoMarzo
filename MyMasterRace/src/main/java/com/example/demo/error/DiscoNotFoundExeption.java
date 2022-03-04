@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class DiscoNotFoundExeption extends RuntimeException{
 
 	/**
-	 * 
+	 * Esta excepcion solo se deberia de ver cuando no existe un disco duro con la id introducida
 	 */
 	private static final long serialVersionUID = -2008283026892932404L;
 

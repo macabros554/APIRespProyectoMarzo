@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ContrasenaNotFoundExeption extends RuntimeException{
 	
 	/**
-	 * 
+	 * Esta excepcion solo se deberia de ver cuando la contraseña del usuario no es valida
 	 */
 	private static final long serialVersionUID = -1983507434020502995L;
 

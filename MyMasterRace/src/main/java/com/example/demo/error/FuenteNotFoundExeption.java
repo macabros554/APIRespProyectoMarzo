@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class FuenteNotFoundExeption extends RuntimeException{
 
 	/**
-	 * 
+	 * Esta excepcion solo se deberia de ver cuando no existe una fuente con la id introducida
 	 */
 	private static final long serialVersionUID = -7555320173876566180L;
 

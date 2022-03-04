@@ -8,7 +8,7 @@ public class PedidoUsuarioNotFoundExeption extends RuntimeException{
 
 
 	/**
-	 * 
+	 * Esta excepcion solo se deberia de ver cuando el usuario no tiene el pedido introducido
 	 */
 	private static final long serialVersionUID = -5057115958129630205L;
 

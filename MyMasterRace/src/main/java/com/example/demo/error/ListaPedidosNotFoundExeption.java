@@ -8,7 +8,7 @@ public class ListaPedidosNotFoundExeption extends RuntimeException{
 
 
 	/**
-	 * 
+	 * Esta excepcion solo se deberia de ver cuando se le introduce campos vacios al pedido
 	 */
 	private static final long serialVersionUID = 8668594047790173696L;
 

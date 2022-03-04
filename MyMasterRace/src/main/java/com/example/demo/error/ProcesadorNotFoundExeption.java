@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ProcesadorNotFoundExeption extends RuntimeException{
 
 	/**
-	 * 
+	 * Esta excepcion solo se deberia de ver cuando no existe un procesador con la id introducida
 	 */
 	private static final long serialVersionUID = -8668345575635376335L;
 

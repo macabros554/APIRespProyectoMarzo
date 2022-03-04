@@ -9,7 +9,7 @@ public class PedidoReferenceNotFoundExeption extends RuntimeException{
 
 
 	/**
-	 * 
+	 * Esta excepcion solo se deberia de ver cuando el pedido no existe o el ordenador introducido no esta asociado a ese pedido
 	 */
 	private static final long serialVersionUID = 9179884440057752959L;
 
