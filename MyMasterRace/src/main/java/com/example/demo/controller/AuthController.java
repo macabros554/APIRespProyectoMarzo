@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,7 @@ import com.example.demo.error.ApiError;
 import com.example.demo.error.ContrasenaNotFoundExeption;
 import com.example.demo.error.ExisteUsuarioNotFoundExeption;
 import com.example.demo.error.TokenNoValidoExeption;
+import com.example.demo.error.UserNotFoundExeption;
 import com.example.demo.model.LoginCredentials;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepo;
@@ -98,10 +100,19 @@ public class AuthController {
     	}catch (Exception e) {
 			throw new TokenNoValidoExeption();
 		}
-    	
     }
     
-    
+    @GetMapping("/auth/email/{email}")
+    public ResponseEntity<User> comprobarEmail(@PathVariable String email) {
+    	User respuesta = serviceUsuario.buscarUsuario(email);
+    	
+    	if (respuesta!=null) {
+			return ResponseEntity.ok(respuesta);
+		}else {
+			throw new UserNotFoundExeption(email);
+		}
+    	
+    }
     
     
     
@@ -117,6 +128,16 @@ public class AuthController {
     	e.setFecha(LocalDateTime.now());
     	
     	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+	} 
+    
+    @ExceptionHandler(UserNotFoundExeption.class)
+    public ResponseEntity<ApiError> usuarioNoEncontrado(UserNotFoundExeption ex) throws Exception {
+    	ApiError e = new ApiError();
+    	e.setEstado(HttpStatus.NOT_FOUND);
+    	e.setMensaje(ex.getMessage());
+    	e.setFecha(LocalDateTime.now());
+    	
+    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
 	} 
     
     @ExceptionHandler(ContrasenaNotFoundExeption.class)
